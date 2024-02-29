@@ -1,0 +1,28 @@
+<main class="contenedor contenedor-formulario">
+  <h1><%- pageName %></h1>
+
+  <form action="/register" method="post" class="default-form">
+    <div class="campo">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" placeholder="Tu Email"
+      value="<% if(typeof formData !== 'undefined'){ %><%- formData["email"] %><% } %>"/>
+    </div>
+    <div class="campo">
+      <label for="name">Nombre</label>
+      <input type="text" name="name" id="name" placeholder="Tu Nombre" value="<% if(typeof formData !== 'undefined'){ %><%- formData["name"] %><% } %>" />
+    </div>
+    <div class="campo">
+      <label for="password">Password</label>
+      <input type="text" name="password" id="password" placeholder="Tu password"
+      value="<% if(typeof formData !== 'undefined'){ %><%- formData["password"] %><% } %>" />
+    </div>
+    <div class="campo">
+      <label for="password">Repetir password</label>
+      <input type="text" name="passwordRepeat" id="passwordRepeat"
+      placeholder="Repite el password" value="<% if(typeof formData !== 'undefined'){ %><%- formData["passwordRepeat"] %><% } %>" />
+    </div>
+    <div class="campo enviar">
+      <input type="submit" value="Crear Cuenta" class="btn btn-rosa" />
+    </div>
+  </form>
+</main>

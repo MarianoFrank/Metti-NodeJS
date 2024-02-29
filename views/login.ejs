@@ -1,0 +1,23 @@
+<main class="contenedor contenedor-formulario">
+    <h1><%- pageName %></h1>
+  
+    <form action="/login" method="post" class="default-form">
+      <div class="campo">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Tu Email" />
+      </div>
+      <div class="campo">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Tu password"
+        />
+      </div>
+     <div class="campo enviar">
+        <input type="submit" value="Iniciar sesión" class="btn btn-rosa">
+     </div>
+    </form>
+  </main>
+  
