@@ -11,7 +11,9 @@ import db from "./config/db.js";
 import indexRoutes from "./routes/indexRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
-db.sync({ force: true })
+db.sync(
+  //{ force: true }
+  )
   .then(() => {
     console.log("Base de datos conectada");
   })
@@ -46,7 +48,6 @@ app.use(
 app.use(flash());
 
 app.use((req, res, next) => {
-
   res.locals.year = new Date().getFullYear();
   next();
 });

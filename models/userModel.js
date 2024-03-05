@@ -18,10 +18,6 @@ User.init(
     name: {
       type: DataTypes.STRING(60),
       allowNull: false,
-      unique: {
-        args: true,
-        msg: "Nombre de usuario ya registrado",
-      },
       validate: {
         notEmpty: { msg: "Nombre no puede ir vacio" },
       },
@@ -30,10 +26,6 @@ User.init(
     email: {
       type: DataTypes.STRING(30),
       allowNull: false,
-      unique: {
-        args: true,
-        msg: "Usuario ya registrado",
-      },
       validate: {
         isEmail: { msg: "Agrega email válido" },
       },
@@ -49,8 +41,8 @@ User.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    token: DataTypes.STRING(60),
-    tokeExpire: DataTypes.DATE,
+    token: DataTypes.TEXT,
+    tokenExpire: DataTypes.DATE,
   },
   {
     sequelize: db,

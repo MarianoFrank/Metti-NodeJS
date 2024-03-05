@@ -1,8 +1,14 @@
 import nodemailer from "nodemailer";
-import emailConfig from "../config/emails.js";
 import fs from "fs";
 import util from "util";
 import ejs from "ejs";
+import path from "path";
+
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 const transport = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
@@ -14,7 +20,9 @@ const transport = nodemailer.createTransport({
 });
 
 export const enviarEmail = (opt) => {
-  const templatePath = __dirname + `../views/emails/${opt.template}.ejs`;
+  const templatePath = path.join(
+    __dirname + `/../views/emails/${opt.template}.ejs`
+  );
 
   //retorna una funcion que se usa para compliar EJS a HTML
   const compiledTemplate = ejs.compile(fs.readFileSync(templatePath, "utf8"));
@@ -29,6 +37,5 @@ export const enviarEmail = (opt) => {
     html: html,
   };
 
-  const sendMail = util.promisify(transport.sendMail, transport);
-  return sendMail(mailOptions);
+  return transport.sendMail(mailOptions);
 };

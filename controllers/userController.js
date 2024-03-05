@@ -1,6 +1,8 @@
 import { body, validationResult } from "express-validator";
 import User from "../models/userModel.js";
 import { enviarEmail } from "../handlers/emails.js";
+import { generateJWT, verifyJWT } from "../helpers/tokens.js";
+import jwt from "jsonwebtoken";
 
 export const loginForm = (req, res) => {
   res.render("login", {
@@ -18,44 +20,115 @@ export const registerForm = (req, res) => {
 };
 
 export const register = async (req, res) => {
+  try {
+    const body = req.body;
+
+    const newUser = User.build(body);
+
+    const erroresCampos = await validarCamposRegistro(newUser, req);
+
+    const erroresDatos = await existeUsuario(newUser);
+
+    const errores = [...erroresCampos, ...erroresDatos];
+
+    if (errores.length > 0) {
+      req.flash("error", errores);
+      return registerForm(req, res);
+    }
+
+    const token = generateJWT(newUser.email);
+
+    newUser.token = token;
+    newUser.tokenExpire = new Date(Date.now() + 3600 * 1000); //1 hora
+
+    await newUser.save();
+
+    //Enviar Email con token
+    await enviarEmail({
+      user: newUser,
+      url: `http://${req.headers.host}/confirm-account/${token}`,
+      subject: "Confirma tu cuenta de Metti",
+      template: "confirm-account",
+    });
+
+    req.flash(
+      "success",
+      "Verifique su bandeja de entrada para validar registro"
+    );
+    return res.redirect("/login");
+  } catch (error) {
+    console.log(error);
+    req.flash("error", "Ha ocurrido un error intentelo mas tarde");
+  }
+
+  return registerForm(req, res);
+};
+
+const existeUsuario = async (newUser) => {
+  let errores = [];
+
+  let user = await User.findOne({ where: { email: newUser.email } });
+
+  if (user && user.active === true) {
+    errores.push("Email ya registrado");
+  }
+
+  user = null;
+
+  user = await User.findOne({ where: { name: newUser.name } });
+
+  if (user) {
+    errores.push("Nombre de usuario ya registrado, intente otro");
+  }
+
+  return errores;
+};
+
+const validarCamposRegistro = async (user, req) => {
+  //Express
   const rules = [
     body("passwordRepeat")
-      .equals(req.body.password)
+      .equals(user.password)
       .withMessage("Los passwords no son iguales"),
   ];
   await Promise.all(rules.map((validation) => validation.run(req)));
   const result = validationResult(req);
-  const errorsExpress = result.errors.map((error) => error.msg);
+  const errores = result.errors.map((error) => error.msg);
 
-  let errorsSequelize = [];
+  //Sequelize
+  await user.validate().catch((error) => {
+    error.errors.forEach((error) => {
+      errores.push(error.message);
+    });
+  });
+
+  return errores;
+};
+
+export const confirmAccount = async (req, res) => {
+  const token = req.params.token;
   try {
-    const newUser = User.build(req.body);
-    await newUser.validate();
-    if (errorsExpress.length === 0) {
-      await newUser.save();
+    const { email } = verifyJWT(token);
 
-      const url = `http://${req.header.host}/confirm-account/token`
+    const user = await User.findOne({ where: { email, token } });
 
-      //Enviar Email
-      await enviarEmail({
-        user: newUser,
-        url,
-        subject: "Confirma tu cuenta de Metti",
-        template: "confirm-account"
-      });
+    if (user) {
+      user.active = true;
+      user.token = null;
+      user.tokenExpire = null;
+
+      await user.save();
 
       req.flash(
         "success",
-        "Verifique su bandeja de entrada para validar registro"
+        "Cuenta verifiacada correctamente, ya puedes iniciar sesion"
       );
-      return res.redirect("/login");
     }
+    req.flash("error", "Token expirado o inexistente");
   } catch (error) {
-    errorsSequelize = error.errors.map((error) => error.message);
+    console.log(error);
+    req.flash("error", "Ha ocurrido un error intentelo mas tarde");
   }
 
-  const allErrors = [...errorsExpress, ...errorsSequelize];
-  req.flash("error", allErrors);
-
-  return registerForm(req, res);
+  return res.redirect("/login");
 };

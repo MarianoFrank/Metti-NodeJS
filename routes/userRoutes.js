@@ -9,5 +9,5 @@ router.get("/login", userController.loginForm);
 router.post("/register", userController.register);
 router.get("/register", userController.registerForm);
 
-
+router.get("/confirm-account/:token",userController.confirmAccount);
 export default router;
