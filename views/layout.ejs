@@ -14,6 +14,10 @@
       href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
     />
     <link rel="stylesheet" href="/css/app.css" />
+
+    <!-- Editor JS -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" rel="stylesheet">
     <title>Metti - <%- pageName %></title>
   </head>
   <body>
@@ -31,8 +35,8 @@
     <!-- Flash Messages -->
     <% if(messages) { %> <% const types = Object.keys(messages) %>
     <div class="alertas">
-      <% types.forEach(type => { %> <% const messagesOfType = messages[type] %> <%
-      messagesOfType.forEach(message => { %>
+      <% types.forEach(type => { %> <% const messagesOfType = messages[type] %>
+      <% messagesOfType.forEach(message => { %>
       <div class="alerta <%- type %>"><%= message %></div>
       <% }) %> <% }) %>
     </div>
@@ -52,4 +56,6 @@
       </p>
     </footer>
   </body>
+
+  <script src="/js/index.min.js"></script>
 </html>

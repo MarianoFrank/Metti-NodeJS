@@ -78,15 +78,15 @@ p {
 .btn {
   padding: 1rem 4rem;
   text-align: center;
-  font-weight: 700;
-  font-size: 1.3rem;
+  font-weight: 400;
+  font-size: 1rem;
   border: none;
   background-color: transparent;
   color: white;
   width: 100%;
   display: block;
   flex: 0 0 100%;
-  border-radius: 2rem;
+  border-radius: .85rem;
 }
 @media (min-width: 768px) {
   .btn {
@@ -99,25 +99,25 @@ p {
   cursor: pointer;
 }
 .btn-amarillo {
-  background-color: #ff8000;
+  background-color: #f6e05e;
 }
 .btn-rosa {
-  background-color: #ff4593;
+  background-color: #f472b6;
 }
 .btn-azul {
-  background-color: #068d9d;
+  background-color: #90cdf4;
 }
 .btn-naranja {
-  background-color: #e4572e;
+  background-color: #fca5a5;
 }
 .btn-verde {
-  background-color: #688e26;
+  background-color: #68d391;
 }
 .btn-azul2 {
-  background-color: #0f4c5c;
+  background-color: #81e6d9;
 }
 .btn-rojo {
-  background-color: #db2113;
+  background-color: #f56565;
 }
 
 /** Grid **/
@@ -633,4 +633,20 @@ aside .ubicacion {
 }
 aside img {
   display: block;
+}
+
+
+.campo.editorjs{
+ align-items: flex-start;
+
+}
+
+#editorjs{
+  padding: 1rem;
+  width: 100%;
+  border: 1px solid #a8a6a8;
+  border-radius: .5rem;
+}
+.codex-editor__redactor{
+  padding-bottom: 0rem !important;
 }

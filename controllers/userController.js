@@ -2,7 +2,7 @@ import { body, validationResult } from "express-validator";
 import User from "../models/userModel.js";
 import { enviarEmail } from "../handlers/emails.js";
 import { generateJWT, verifyJWT } from "../helpers/tokens.js";
-import jwt from "jsonwebtoken";
+import passport from "../config/passport.js";
 
 export const loginForm = (req, res) => {
   res.render("login", {
@@ -32,6 +32,7 @@ export const register = async (req, res) => {
     const errores = [...erroresCampos, ...erroresDatos];
 
     if (errores.length > 0) {
+      console.log(errores);
       req.flash("error", errores);
       return registerForm(req, res);
     }
@@ -60,7 +61,6 @@ export const register = async (req, res) => {
     console.log(error);
     req.flash("error", "Ha ocurrido un error intentelo mas tarde");
   }
-
   return registerForm(req, res);
 };
 
@@ -123,12 +123,59 @@ export const confirmAccount = async (req, res) => {
         "success",
         "Cuenta verifiacada correctamente, ya puedes iniciar sesion"
       );
+    } else {
+      req.flash("error", "Token expirado o inexistente");
     }
-    req.flash("error", "Token expirado o inexistente");
   } catch (error) {
     console.log(error);
     req.flash("error", "Ha ocurrido un error intentelo mas tarde");
   }
+
+  return res.redirect("/login");
+};
+
+export const login = (req, res) => {
+  passport.authenticate("local", (err, user, info, status) => {
+    if (err) {
+      console.error(err);
+      req.flash("error", "Ocurrió un error, inténtelo más tarde");
+      return res.redirect("/login");
+    }
+  
+    if (user) {
+      if (user.active === false) {
+        req.flash("error", "Debe validar su cuenta");
+        return res.redirect("/login");
+      }
+  
+      return req.logIn(user, (err) => {
+        if (err) {
+          console.error(err);
+          req.flash("error", "Ocurrió un error, inténtelo más tarde");
+          return res.redirect("/login");
+        }
+        return res.redirect("/dashboard");
+      });
+    }
+  
+    if (status === 400) {
+      req.flash("error", "Ambos campos son requeridos");
+    } else if (info) {
+      req.flash("error", info.message);
+    } 
+    return res.redirect("/login");
+  })(req, res);
+  
+};
+
+
+
+export const userIsAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+
+  req.flash("error", "Debes iniciar sesion");
 
   return res.redirect("/login");
 };

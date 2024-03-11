@@ -11,9 +11,11 @@ import db from "./config/db.js";
 import indexRoutes from "./routes/indexRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
-db.sync(
-  //{ force: true }
-  )
+import passport from "./config/passport.js";
+
+db.sync({
+  //force: true
+})
   .then(() => {
     console.log("Base de datos conectada");
   })
@@ -43,6 +45,10 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+//inicilizar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //flash messages
 app.use(flash());

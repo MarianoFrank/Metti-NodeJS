@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "server": "nodemon index.js ",
-    "gulp": "gulp",
-    "dev": "concurrently \"npm run server\""
+    "gulp": "gulp dev",
+    "dev": "concurrently \"npm run server\" \"npm run gulp\""
   },
   "repository": {
     "type": "git",
@@ -24,21 +24,33 @@
   },
   "type": "module",
   "dependencies": {
+    "@editorjs/editorjs": "^2.29.0",
+    "@editorjs/header": "^2.8.1",
+    "@editorjs/list": "^1.9.0",
+    "autoprefixer": "^10.4.18",
+    "babel-loader": "^9.1.3",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.1",
+    "editorjs-html": "^3.4.3",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.18.0",
     "express-validator": "^7.0.1",
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^10.0.0",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.10",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack-stream": "^7.0.0"
   }
 }

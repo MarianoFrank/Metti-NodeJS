@@ -8,12 +8,13 @@ const __dirname = dirname(__filename);
 
 const entry = {
   //js
-  //index: "./src/js/index.js",
+  index: "./src/js/index.js",
 };
 
 export default {
   entry,
   output: {
+    path: path.resolve(__dirname, "public/js"),
     filename: "[name].min.js",
     chunkFilename: "[name].min.js",
   },
