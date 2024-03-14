@@ -1,7 +1,7 @@
 import passport from "passport";
 import LocalStrategy from "passport-local";
 
-import User from "../models/userModel.js";
+import User from "../models/User.js";
 
 //Configuro la estrategia local que usará passport
 

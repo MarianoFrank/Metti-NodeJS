@@ -25,7 +25,9 @@ window.addEventListener("DOMContentLoaded", () => {
       submit.addEventListener("click", async (e) => {
         e.preventDefault();
         const contenido = await editor.save();
-
+        if (! contenido.blocks.length > 0) {
+          return;
+        }
         const edjsParser = edjsHTML();
         //convierte la estructura de editor js en un arreglo de elementos html
         const arrayHtml = edjsParser.parse(contenido);

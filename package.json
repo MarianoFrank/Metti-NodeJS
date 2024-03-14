@@ -6,7 +6,9 @@
   "scripts": {
     "server": "nodemon index.js ",
     "gulp": "gulp dev",
-    "dev": "concurrently \"npm run server\" \"npm run gulp\""
+    "dev": "concurrently \"npm run server\" \"npm run gulp\"",
+    "db:importar": "node ./seed/seeder.js -i",
+    "db:eliminar": "node ./seed/seeder.js -d"
   },
   "repository": {
     "type": "git",
@@ -33,16 +35,21 @@
     "body-parser": "^1.20.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
-    "dotenv": "^16.4.1",
+    "css-loader": "^6.10.0",
+    "dotenv": "^16.4.5",
+    "dropzone": "^6.0.0-beta.2",
     "editorjs-html": "^3.4.3",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
+    "express-sanitizer": "^1.0.6",
     "express-session": "^1.18.0",
     "express-validator": "^7.0.1",
     "gulp": "^4.0.2",
     "gulp-postcss": "^10.0.0",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "ngx-dropzone-wrapper": "^16.0.0",
     "nodemailer": "^6.9.10",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
@@ -50,7 +57,9 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.1",
     "sqlite3": "^5.1.7",
+    "style-loader": "^3.3.4",
     "terser-webpack-plugin": "^5.3.10",
+    "uuid": "^9.0.1",
     "webpack-stream": "^7.0.0"
   }
 }

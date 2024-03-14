@@ -1,5 +1,5 @@
 import { body, validationResult } from "express-validator";
-import User from "../models/userModel.js";
+import User from "../models/User.js";
 import { enviarEmail } from "../handlers/emails.js";
 import { generateJWT, verifyJWT } from "../helpers/tokens.js";
 import passport from "../config/passport.js";

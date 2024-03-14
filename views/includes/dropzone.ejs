@@ -1,0 +1,20 @@
+<!-- Area de dropzone -->
+<div class="dropzone-drag-area">
+  <div class="dz-message" data-dz-message>
+    <span>Arrastra o click para subir imagen</span>
+  </div>
+  <!-- Contenedr de previsualizaciones -->
+  <div class="d-none" id="dzPreviewContainer"></div>
+  
+</div>
+
+<!-- Este elemento no se vera directamente, pero se usa como 
+    tempate para la vista previa de la/s imagen/es subida/s,
+    se debe configurar dropzone la opcion "previewTemplate" 
+    con "innerHTML" de este elemento-->
+<div style="display: none" id="previewTemplate">
+  <div class="dz-preview dz-image-preview">
+    <img class="dz-thumbnail" data-dz-thumbnail />
+    <i class="dz-delete fa-solid fa-circle-xmark" data-dz-remove></i>
+  </div>
+</div>

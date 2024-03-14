@@ -13,6 +13,8 @@ import userRoutes from "./routes/userRoutes.js";
 
 import passport from "./config/passport.js";
 
+
+
 db.sync({
   //force: true
 })
@@ -35,6 +37,7 @@ app.use(express.static("public"));
 
 //habilitar cookie parser
 app.use(cookieParser());
+
 
 //Crear session
 app.use(

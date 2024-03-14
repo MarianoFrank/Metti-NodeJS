@@ -1,4 +1,5 @@
 import express from "express";
+import { body } from "express-validator";
 import * as userController from "../controllers/userController.js";
 import * as adminController from "../controllers/adminController.js";
 import * as groupController from "../controllers/groupController.js";
@@ -18,7 +19,7 @@ router.get("/confirm-account/:token", userController.confirmAccount);
 
 router.get(
   "/dashboard",
-  userController.userIsAuthenticated,
+  //userController.userIsAuthenticated,
   adminController.renderDashboard
 );
 router.get(
@@ -29,6 +30,7 @@ router.get(
 router.post(
   "/new-group",
   //userController.userIsAuthenticated,
+  body("*").trim().escape(), //sanitiza todo
   groupController.createGroup
 );
 

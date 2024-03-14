@@ -1,18 +1,43 @@
 <main class="contenedor contenedor-formularios no-padding">
   <h1><%= pageName %></h1>
 
-  <form action="/new-group" class="default-form editorjs-form" method="post">
+  <form
+    class="dropzone default-form editorjs-form"
+    id="form-upload"
+    method="post"
+    enctype="multipart/form-data"
+  >
     <div class="campo">
       <label for="name">Nombre</label>
       <input type="text" name="name" id="name" placeholder="Nombre del grupo" />
     </div>
+
+    <div class="campo">
+      <label for="categoria">Categoria</label>
+      <select name="CategoriaId">
+        <option selected disabled>-- Elige una categoria --</option>
+        <% categorias.forEach(categoria => { %>
+        <option value="<%= categoria.id %>"><%= categoria.name %></option>
+        <% }); %>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="url">Sitio Web</label>
+      <input type="url" name="url" placeholder="Sitio Web" />
+    </div>
+
+    <div class="campo">
+      <label>Imagen</label>
+      <%- include('../includes/dropzone.ejs') %>
+    </div>
+
     <div class="campo editorjs">
       <label for="descripcion">Descripcion</label>
       <div id="editorjs"></div>
       <input type="hidden" name="descripcion" id="descripcion" />
     </div>
-    <div class="campo">
-      <input type="submit" class="btn btn-amarillo" />
-    </div>
+
+    <button type="submit" class="btn btn-amarillo">Crear Grupo</button>
   </form>
 </main>
