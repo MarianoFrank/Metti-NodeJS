@@ -26,7 +26,7 @@ Grupo.init(
         notEmpty: { msg: "Coloca una descripcion" },
       },
     },
-    ulr: DataTypes.TEXT,
+    url: DataTypes.TEXT,
     imagen: DataTypes.TEXT,
   },
   {
@@ -36,7 +36,7 @@ Grupo.init(
   }
 );
 
-Grupo.belongsTo(Categoria, { foreignKey: "CategoriaId" });
+Grupo.belongsTo(Categoria, { foreignKey: "CategoriaId", allowNull: true });
 Grupo.belongsTo(User);
 
 export default Grupo;

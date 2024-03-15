@@ -19,17 +19,18 @@ router.get("/confirm-account/:token", userController.confirmAccount);
 
 router.get(
   "/dashboard",
-  //userController.userIsAuthenticated,
+  userController.userIsAuthenticated,
   adminController.renderDashboard
 );
 router.get(
   "/new-group",
-  //userController.userIsAuthenticated,
+  userController.userIsAuthenticated,
   groupController.formNewGroup
 );
 router.post(
   "/new-group",
-  //userController.userIsAuthenticated,
+  userController.userIsAuthenticated,
+  groupController.uploadImage,
   body("*").trim().escape(), //sanitiza todo
   groupController.createGroup
 );

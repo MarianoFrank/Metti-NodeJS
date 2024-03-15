@@ -2,9 +2,10 @@
   <h1><%= pageName %></h1>
 
   <form
+    action="/new-group"
+    method="post"
     class="dropzone default-form editorjs-form"
     id="form-upload"
-    method="post"
     enctype="multipart/form-data"
   >
     <div class="campo">
@@ -15,7 +16,7 @@
     <div class="campo">
       <label for="categoria">Categoria</label>
       <select name="CategoriaId">
-        <option selected disabled>-- Elige una categoria --</option>
+        <option selected disabled value="">-- Elige una categoria --</option>
         <% categorias.forEach(categoria => { %>
         <option value="<%= categoria.id %>"><%= categoria.name %></option>
         <% }); %>
