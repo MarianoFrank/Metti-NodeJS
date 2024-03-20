@@ -1,1 +1,3 @@
-import "./groupsFrom.js";
+import "./dragAndDrop.js";
+import "./deleteGroup.js";
+import "./map.js";

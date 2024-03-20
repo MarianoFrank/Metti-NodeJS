@@ -23,7 +23,14 @@ export default {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: "babel-loader",
+        use: {
+          loader: "babel-loader",
+          options: {
+            //los presets en una configuracion predeterminad, en este caso para compilar ES2015+
+            //https://babeljs.io/docs/presets
+            presets: ["@babel/preset-env"],
+          },
+        },
       },
       {
         test: /\.css$/,

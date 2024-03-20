@@ -4,8 +4,7 @@
   <form
     action="/new-group"
     method="post"
-    class="dropzone default-form editorjs-form"
-    id="form-upload"
+    class="default-form editorjs-form"
     enctype="multipart/form-data"
   >
     <div class="campo">
@@ -29,14 +28,30 @@
     </div>
 
     <div class="campo">
-      <label>Imagen</label>
-      <%- include('../includes/dropzone.ejs') %>
-    </div>
+      <label for="imagen">Imagen</label>
+      <div id="drop">
+        Arrastra y suelta tus archivos aquí,
+        <span id="uploadTrigger">o click aqui para subir.</span>
 
-    <div class="campo editorjs">
+        <div class="preview-container">
+          <img id="preview" alt="Vista previa de la imagen" />
+          <i class="fa-solid fa-circle-xmark" id="deleteImg"></i>
+        </div>
+      </div>
+      <input
+        type="file"
+        name="imagen"
+        id="imagen"
+        accept="image/*"
+        style="display: none"
+      />
+    </div>
+    <div class="campo">
       <label for="descripcion">Descripcion</label>
-      <div id="editorjs"></div>
-      <input type="hidden" name="descripcion" id="descripcion" />
+      <div class="trix-container">
+        <input id="x" type="hidden" name="descripcion" id="descripcion" />
+        <trix-editor input="x"></trix-editor>
+      </div>
     </div>
 
     <button type="submit" class="btn btn-amarillo">Crear Grupo</button>

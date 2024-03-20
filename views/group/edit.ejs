@@ -1,0 +1,80 @@
+<main class="contenedor contenedor-formularios no-padding">
+  <h1><%= pageName %></h1>
+
+  <form method="post" class="default-form editorjs-form" enctype="multipart/form-data">
+    <div class="campo">
+      <label for="name">Nombre</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Nombre del grupo"
+        value="<%- grupo.name %>"
+      />
+    </div>
+
+    <div class="campo">
+      <label for="categoria">Categoria</label>
+      <select name="CategoriaId">
+
+        <option <%- (!grupo.CategoriaId) ? "selected" : ""; %>  disabled value="">-- Elige una categoria --</option>
+        
+        <% categorias.forEach(categoria => { %>
+        <option value="<%= categoria.id %>" <%- (categoria.id === grupo.CategoriaId) ? "selected" : ""; %> ><%= categoria.name %></option>
+        <% }); %>
+
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="url">Sitio Web</label>
+      <input
+        type="url"
+        name="url"
+        placeholder="Sitio Web"
+        value="<%- grupo.url %>"
+      />
+    </div>
+
+    <div class="campo">
+      <label for="imagen">Imagen</label>
+      <div id="drop">
+        Arrastra y suelta tus archivos aquí,
+        <span id="uploadTrigger">o click aqui para subir.</span>
+
+        <div class="preview-container">
+          <img 
+          <% if(grupo.imagen){ %>
+            src="/uploads/<%- grupo.imagen %>"
+          <% } %>
+           id="preview" alt="Vista previa de la imagen" />
+          <i class="fa-solid fa-circle-xmark" id="deleteImg"></i>
+        </div>
+      </div>
+      <input
+        type="file"
+        name="imagen"
+        id="imagen"
+        accept="image/*"
+        style="display: none"
+      />
+      <input type="hidden" name="hasImage" value="<%- grupo.imagen ? "true" : "false" %>">
+    </div>
+
+    <div class="campo">
+      <label for="descripcion">Descripcion</label>
+      <div class="trix-container">
+        <input
+          id="x"
+          type="hidden"
+          name="descripcion"
+          id="descripcion"
+          value="<%- grupo.descripcion %>"
+        />
+        <trix-editor input="x"></trix-editor>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-amarillo">Guardar Cambios</button>
+  </form>
+</main>

@@ -22,6 +22,9 @@ router.get(
   userController.userIsAuthenticated,
   adminController.renderDashboard
 );
+
+//Grupos
+//Create
 router.get(
   "/new-group",
   userController.userIsAuthenticated,
@@ -31,8 +34,28 @@ router.post(
   "/new-group",
   userController.userIsAuthenticated,
   groupController.uploadImage,
-  body("*").trim().escape(), //sanitiza todo
+  body("*").trim().escape(),
   groupController.createGroup
 );
+//Edit
+router.get(
+  "/edit-group/:id",
+  userController.userIsAuthenticated,
+  groupController.formEditGroup
+);
+router.post(
+  "/edit-group/:id",
+  userController.userIsAuthenticated,
+  groupController.uploadImage,
+  body("*").trim().escape(),
+  groupController.editGroup
+);
+//Eliminar
+router.post(
+  "/delete-group",
+  userController.userIsAuthenticated,
+  body("*").trim().escape(),
+  groupController.deleteGroup
+); //Api para eliminar
 
 export default router;

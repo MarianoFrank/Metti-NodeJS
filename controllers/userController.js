@@ -141,13 +141,13 @@ export const login = (req, res) => {
       req.flash("error", "Ocurrió un error, inténtelo más tarde");
       return res.redirect("/login");
     }
-  
+
     if (user) {
       if (user.active === false) {
         req.flash("error", "Debe validar su cuenta");
         return res.redirect("/login");
       }
-  
+
       return req.logIn(user, (err) => {
         if (err) {
           console.error(err);
@@ -157,18 +157,15 @@ export const login = (req, res) => {
         return res.redirect("/dashboard");
       });
     }
-  
+
     if (status === 400) {
       req.flash("error", "Ambos campos son requeridos");
     } else if (info) {
       req.flash("error", info.message);
-    } 
+    }
     return res.redirect("/login");
   })(req, res);
-  
 };
-
-
 
 export const userIsAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
