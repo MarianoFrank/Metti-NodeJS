@@ -41,6 +41,9 @@ User.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    descripcion:{
+      type: DataTypes.TEXT,
+    },
     token: DataTypes.TEXT,
     tokenExpire: DataTypes.DATE,
   },

@@ -4,30 +4,75 @@
     <a href="/new-group" class="btn btn-amarillo">Nuevo Grupo</a>
     <a href="/new-meeti" class="btn btn-azul">Nuevo Metti</a>
     <a href="/edit-profile" class="btn btn-rosa">Editar Perfil</a>
-    <a href="/img-profile" class="btn btn-rosa">Imagen Perfil</a>
   </div>
 
   <div class="seccion-admin">
-    <h2>Tus eventos</h2>
+    <h2>Proximos Meeti's</h2>
     <ul>
+      <% if(meetis.length > 0){ %> <% meetis.forEach(meeti => { %>
       <li>
         <div class="informacion-admin">
-          <p class="fecha">Lunues</p>
-          <h3>Ecommerce</h3>
-          <small>23 asistentes</small>
+          <p class="fecha">
+            <%- moment(meeti.fecha + " "+ meeti.hora).format('LLLL') %>
+          </p>
+          <h3><%- meeti.titulo %></h3>
+          <small><%- meeti.interesados %></small>
         </div>
         <div class="acciones contenedor-botones">
-          <a href="/edit-meeti" class="btn btn-verde">Editar</a>
-          <a href="" class="btn btn-azul2">Asistentes</a
-          ><a href="" class="btn btn-rojo">Eliminar</a>
+          <a href="/edit-meeti/<%- meeti.id %>" class="btn btn-verde">Editar</a>
+          <a href="/asistentes/<%- meeti.id %>" class="btn btn-azul2"
+            >Asistentes</a
+          >
+          <button
+            data-meeti-id="<%- meeti.id %>"
+            class="btn btn-rojo"
+            id="deleteMeeti"
+          >
+            Eliminar
+          </button>
         </div>
       </li>
+      <% }) %> <% } else{ %>
+      <p>No tienes meetis, crea uno.</p>
+      <% } %>
     </ul>
   </div>
 
   <div class="seccion-admin">
-    <% if(grupos.length > 0){ %>
+    <h2>Meeti's Pasados</h2>
+    <ul>
+      <% if(oldMeetis.length > 0){ %> <% oldMeetis.forEach(meeti => { %>
+      <li>
+        <div class="informacion-admin">
+          <p class="fecha">
+            <%- moment(meeti.fecha + " "+ meeti.hora).format('LLLL') %>
+          </p>
+          <h3><%- meeti.titulo %></h3>
+          <small><%- meeti.interesados %></small>
+        </div>
+        <div class="acciones contenedor-botones">
+          <a href="/edit-meeti/<%- meeti.id %>" class="btn btn-verde">Editar</a>
+          <a href="/asistentes/<%- meeti.id %>" class="btn btn-azul2"
+            >Asistentes</a
+          >
+          <button
+            data-meeti-id="<%- meeti.id %>"
+            class="btn btn-rojo"
+            id="deleteMeeti"
+          >
+            Eliminar
+          </button>
+        </div>
+      </li>
+      <% }) %> <% } else{ %>
+      <p>No ha pasado ninguno.</p>
+      <% } %>
+    </ul>
+  </div>
+
+  <div class="seccion-admin">
     <h2>Tus Grupos</h2>
+    <% if(grupos.length > 0){ %>
     <ul>
       <% grupos.forEach(grupo =>{ %>
       <li>
@@ -36,7 +81,11 @@
         </div>
         <div class="acciones contenedor-botones">
           <a href="/edit-group/<%= grupo.id %>" class="btn btn-verde">Editar</a>
-          <button data-group-id="<%= grupo.id %>" class="btn btn-rojo" id="deleteGroup">
+          <button
+            data-group-id="<%= grupo.id %>"
+            class="btn btn-rojo"
+            id="deleteGroup"
+          >
             Eliminar
           </button>
         </div>
@@ -44,7 +93,7 @@
       <%}) %>
     </ul>
     <% } else{ %>
-    <p>No tiene grupos, crea uno.</p>
+    <p>No tienes grupos, crea uno.</p>
     <% } %>
   </div>
 </main>

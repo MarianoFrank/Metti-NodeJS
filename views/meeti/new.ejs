@@ -1,6 +1,6 @@
 <main class="contenedor contenedor-formularios">
   <h1><%- pageName %></h1>
-  <form class="default-form" action="/nuevo-meeti" method="POST">
+  <form class="default-form" action="/new-meeti" method="POST">
     <legend>Sobre el Meeti</legend>
     <div class="campo">
       <label>Grupo</label>
@@ -82,28 +82,34 @@
         id="direccion"
         name="direccion"
         placeholder="Dirección"
+        disabled readonly
       />
     </div>
     <div class="campo">
       <label>Ciudad</label>
-      <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad" />
+      <input
+        type="text"
+        id="ciudad"
+        name="ciudad"
+        placeholder="Ciudad"
+        disabled readonly
+      />
     </div>
     <div class="campo">
       <label>Estado</label>
-      <input type="text" id="estado" name="estado" placeholder="Estado" />
+      <input
+        type="text"
+        id="estado"
+        name="estado"
+        placeholder="Estado"
+        disabled readonly
+      />
     </div>
     <div class="campo">
       <label>País</label>
-      <input type="text" id="pais" name="pais" placeholder="País" />
+      <input type="text" id="pais" name="pais" placeholder="País" disabled readonly />
     </div>
-    <div class="campo">
-      <label>Latitud</label>
-      <input type="text" id="lat" name="lat" />
-    </div>
-    <div class="campo">
-      <label>Longtitud</label>
-      <input type="text" id="lng" name="lng" />
-    </div>
+    <input type="hidden" name="coordenadas" value="" id="coordenadas" />
     <div class="campo enviar">
       <input type="submit" class="btn btn-rosa" value="Crear Meeti" />
     </div>

@@ -1,0 +1,47 @@
+<main class="contenedor contenedor-formularios no-padding">
+  <h1><%- pageName %></h1>
+
+  <form
+    class="default-form"
+    action="/edit-profile"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="campo">
+      <label>Nombre</label>
+      <input type="text" name="name" value="<%= user.name %>" />
+    </div>
+    <div class="campo descripcion">
+      <label>Quien soy</label>
+      <div class="contenedor-editor">
+        <input
+          type="hidden"
+          id="x"
+          name="descripcion"
+          value="<%- user.descripcion %>"
+        />
+        <trix-editor input="x"></trix-editor>
+      </div>
+    </div>
+    <div class="campo">
+      <label>E-mail</label>
+      <input type="email" name="email" value="<%= user.email %>" />
+    </div>
+    <div class="campo">
+      <label>Avatar</label>
+      <input type="file" id="avatar" accept="image/*" name="imagen" />
+      <img src="<%- user.image ? `uploads/${user.image}` : "" %>"
+      id="avatarPreview" alt="avatar" />
+    </div>
+
+    <div class="campo enviar">
+      <input type="submit" class="btn btn-rosa" value="Guardar Cambios" />
+    </div>
+  </form>
+
+  <!-- CroppedJS recortador -->
+  <div class="editor-avatar">
+    <div class="lienzo"></div>
+    <button class="save">OK</button>
+  </div>
+</main>

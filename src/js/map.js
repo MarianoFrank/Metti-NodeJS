@@ -1,22 +1,25 @@
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
-
-//lat - long
-let chords = [-31.742231, -60.517831]; //inicializa en Paraná
-
-const map = L.map("mapa", {
-  center: chords,
-  zoom: 13,
-});
-
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
 
 window.addEventListener("DOMContentLoaded", () => {
   const inputBusqueda = document.getElementById("busqueda");
+
+  if (!inputBusqueda) {
+    return;
+  }
+
+  //lat - long
+  let chords = [-31.742231, -60.517831]; //inicializa en Paraná
+
+  const map = L.map("mapa", {
+    center: chords,
+    zoom: 13,
+  });
+
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
 
   const provider = new OpenStreetMapProvider();
 
@@ -26,10 +29,68 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function moverMapa(chords) {
-    console.log(chords);
+  async function getUbicacion() {
+    //Api de openstreetmap para Reverse geocoding
+    //obtine toda la informacion de una direccion con solo saber sus coordenadas
+    try {
+      const response = await fetch(
+        "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" +
+          chords[0] +
+          "&lon=" +
+          chords[1]
+      );
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  let marker;
+  //mueve el mapa y coloca el marcador en la coordenada
+  function moverMapa() {
     map.setView(chords, 13);
-    L.marker(chords).addTo(map);
+    if (marker) {
+      marker.remove();
+    }
+    marker = L.marker(chords, {
+      draggable: true,
+      autoPan: true,
+    }).addTo(map);
+
+    marker.on("moveend", async function (e) {
+      const chordsObj = e.target.getLatLng();
+      chords = [chordsObj.lat, chordsObj.lng];
+      llenarCampos();
+    });
+  }
+
+  async function llenarCampos() {
+    const ubi = await getUbicacion();
+    if (!ubi) {
+      return;
+    }
+
+    ubi.address.house_number = ubi.address.house_number
+      ? ubi.address.house_number + ", "
+      : "";
+
+    inputBusqueda.value = `${ubi.address.house_number}${ubi.address.road}`;
+
+    const direccion = document.getElementById("direccion");
+    const ciudad = document.getElementById("ciudad");
+    const estado = document.getElementById("estado");
+    const pais = document.getElementById("pais");
+    const coordenadas = document.getElementById("coordenadas");
+
+    direccion.value = `${ubi.address.house_number}${ubi.address.road}`;
+
+    ciudad.value = ubi.address.city;
+    estado.value = ubi.address.state;
+    pais.value = ubi.address.country;
+
+    const { lat, lon } = ubi;
+    coordenadas.value = JSON.stringify({ lat, lng: lon });
   }
 
   function mostrarResultador(results) {
@@ -42,17 +103,17 @@ window.addEventListener("DOMContentLoaded", () => {
         const resultElement = document.createElement("LI");
         resultElement.textContent = result.label;
         //guardamos la coordenada del cada resultado
-        resultElement.dataset.chords = result.bounds[0];
+        resultElement.dataset.chords = JSON.stringify(result.bounds[0]);
         resultsContainer.appendChild(resultElement);
 
         resultElement.addEventListener("click", function (e) {
-          const chordsString = e.target.dataset.chords;
+          chords = JSON.parse(e.target.dataset.chords);
+
+          //oculto modal de resultados
           resultsContainer.style.display = "none";
-          inputBusqueda.value = e.target.textContent;
-          //movemos el mapa (no sin antes convertir las coordenadas a array)
-          moverMapa(
-            chordsString.split(",").map((coordenada) => parseFloat(coordenada))
-          );
+
+          moverMapa();
+          llenarCampos();
         });
       });
     } else {
@@ -88,4 +149,17 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   inputBusqueda.addEventListener("input", buscarDireccion);
+
+  //Verifica si hay coordenadas al momento de cargar la pagina
+  function coordenadasPrevias() {
+    const inputCoordenadas = document.getElementById("coordenadas");
+
+    if (inputCoordenadas.value) {
+      chords = JSON.parse(inputCoordenadas.value);
+      moverMapa();
+      llenarCampos();
+    }
+  }
+
+  coordenadasPrevias();
 });

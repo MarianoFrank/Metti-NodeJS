@@ -572,6 +572,7 @@ trix-toolbar .trix-button--icon-strike {
   .contenedor-botones {
     display: flex;
     flex-direction: row;
+    gap: 2rem;
   }
 
   .contenedor-botones a {
@@ -853,6 +854,7 @@ trix-editor ul {
   width: 100%;
   height: 20rem;
   border-radius: .5rem;
+  border: 1px solid #a8a6a8;
 }
 
 
@@ -885,4 +887,41 @@ trix-editor ul {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Avatar */
+img {
+  display: block;
+
+  /* This rule is very important, please don't ignore this */
+  max-width: 100%;
+}
+
+.editor-avatar{
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  background-color: #2a2a2a5d;
+}
+
+.editor-avatar .lienzo{
+  max-width: 80rem;
+  height: auto;
+}
+
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
+
+/* The css styles for `outline` do not follow `border-radius` on iOS/Safari (#979). */
+.cropper-view-box {
+    outline: 0;
+    box-shadow: 0 0 0 1px #39f;
 }

@@ -3,7 +3,7 @@ import { body } from "express-validator";
 import * as userController from "../controllers/userController.js";
 import * as adminController from "../controllers/adminController.js";
 import * as groupController from "../controllers/groupController.js";
-
+import * as imageController from "../controllers/imageController.js";
 const router = express.Router();
 
 //Public
@@ -16,13 +16,25 @@ router.get("/register", userController.registerForm);
 router.get("/confirm-account/:token", userController.confirmAccount);
 
 //Private
-
 router.get(
   "/dashboard",
   userController.userIsAuthenticated,
   adminController.renderDashboard
 );
 
+router.get(
+  "/edit-profile",
+  userController.userIsAuthenticated,
+  adminController.formEditProfile
+);
+
+router.post(
+  "/edit-profile",
+  userController.userIsAuthenticated,
+  imageController.uploadImage,
+  body("*").trim().escape(),
+  adminController.editProfile
+);
 //Grupos
 //Create
 router.get(
@@ -33,7 +45,7 @@ router.get(
 router.post(
   "/new-group",
   userController.userIsAuthenticated,
-  groupController.uploadImage,
+  imageController.uploadImage,
   body("*").trim().escape(),
   groupController.createGroup
 );
@@ -46,7 +58,7 @@ router.get(
 router.post(
   "/edit-group/:id",
   userController.userIsAuthenticated,
-  groupController.uploadImage,
+  imageController.uploadImage,
   body("*").trim().escape(),
   groupController.editGroup
 );

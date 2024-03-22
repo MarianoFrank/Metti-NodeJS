@@ -1,6 +1,6 @@
 //Este codigo funciona solo para cargar 1 imagen
 window.addEventListener("DOMContentLoaded", () => {
-  const inputFile = document.querySelector('input[type="file"]');
+  const inputFile = document.querySelector('#imagen');
   const dropzoneArea = document.getElementById("drop");
   const uploadTrigger = document.querySelector("#uploadTrigger");
   const preview = document.getElementById("preview");
@@ -70,7 +70,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     dropzoneArea.classList.remove("dragover");
 
-    var archivos = event.dataTransfer.files;
+    var archivos = e.dataTransfer.files;
 
     inputFile.files = archivos;
 

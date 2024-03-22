@@ -12,32 +12,33 @@ router.get(
   userController.userIsAuthenticated,
   meetiController.formNewMeeti
 );
-// router.post(
-//   "/new-meeti",
-//   userController.userIsAuthenticated,
-//   groupController.uploadImage,
-//   body("*").trim().escape(),
-//   groupController.createGroup
-// );
-// //Edit
-// router.get(
-//   "/edit-meeti/:id",
-//   userController.userIsAuthenticated,
-//   groupController.formEditGroup
-// );
-// router.post(
-//   "/edit-meeti/:id",
-//   userController.userIsAuthenticated,
-//   groupController.uploadImage,
-//   body("*").trim().escape(),
-//   groupController.editGroup
-// );
-// //Eliminar
-// router.post(
-//   "/delete-meeti",
-//   userController.userIsAuthenticated,
-//   body("*").trim().escape(),
-//   groupController.deleteGroup
-// ); //Api para eliminar
+router.post(
+  "/new-meeti",
+  userController.userIsAuthenticated,
+  body("*").trim().escape(),
+  body("coordenadas").unescape(),
+  meetiController.createMeeti
+);
+//Edit
+router.get(
+  "/edit-meeti/:id",
+  userController.userIsAuthenticated,
+  meetiController.formEditMeeti
+);
+
+router.post(
+  "/edit-meeti/:id",
+  userController.userIsAuthenticated,
+  body("*").trim().escape(),
+  body("coordenadas").unescape(),
+  meetiController.editMeeti
+);
+//Eliminar
+router.post(
+  "/delete-meeti",
+  userController.userIsAuthenticated,
+  body("*").trim().escape(),
+  meetiController.deleteMeeti
+); //Api para eliminar
 
 export default router;
