@@ -12,9 +12,7 @@ const db = new Sequelize(
   }
 );
 
-db.sync({
-  //force: true
-})
+db.sync()
   .then(() => {
     console.log("Base de datos conectada");
   })

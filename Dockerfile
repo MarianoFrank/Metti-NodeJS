@@ -4,11 +4,8 @@ RUN mkdir -p /home/app
 
 WORKDIR /home/app
 
-COPY package*.json .
+COPY . .
 
 RUN npm install
 
-EXPOSE 3000
-EXPOSE 2525
-
-CMD ["ls"]
+CMD ["npm","run","server"]
