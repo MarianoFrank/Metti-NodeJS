@@ -4,6 +4,7 @@ import { Op } from "sequelize";
 import moment from "moment";
 import User from "../models/User.js";
 import * as imageController from "./imageController.js";
+import { body, validationResult } from "express-validator";
 
 moment.locale("es");
 
@@ -76,5 +77,51 @@ export const editProfile = async (req, res) => {
       req.flash("error", "Ha ocurrido un error intentelo mas tarde");
     }
     return res.redirect("/edit-prodile");
+  }
+};
+
+export const formChangePassword = (req, res) => {
+  res.render("admin/change-password", {
+    pageName: "Cambia tu password",
+    messages: req.flash(),
+  });
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+
+    if (!user.validatePassword(req.body.actual)) {
+      req.flash("error", "Contraseña incorrecta");
+      return res.redirect("/dashboard");
+    }
+
+    await body("nuevo")
+      .equals(req.body.repite)
+      .withMessage("Los passwords no son iguales")
+      .run(req);
+
+    const result = validationResult(req);
+    const errores = result.errors.map((error) => error.msg);
+
+    if (errores.length > 0) {
+      req.flash("error", errores);
+      return res.redirect(`/change-password/${user.id}`);
+    }
+
+    //En este punto los password son ingules y la clave actual es correcta, entonces reemplazamos
+
+    const newPassHashed = user.hashPasswordManualy(req.body.nuevo);
+
+    await user.update({
+      password: newPassHashed,
+    });
+    req.flash("success", "Contraseña cambiada");
+
+    return res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+    req.flash("error", "Ha ocurrido un error intentelo mas tarde");
+    return res.redirect("/dashboard");
   }
 };

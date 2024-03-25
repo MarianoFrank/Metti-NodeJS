@@ -7,6 +7,14 @@
     method="POST"
     enctype="multipart/form-data"
   >
+
+
+    <div class="campo">
+      <label for="">Password</label>
+      <a class="btn btn-azul" href="/change-password/<%= user.id %>">Ir a cambiar Password</a>
+    </div>  
+
+
     <div class="campo">
       <label>Nombre</label>
       <input type="text" name="name" value="<%= user.name %>" />
@@ -23,6 +31,7 @@
         <trix-editor input="x"></trix-editor>
       </div>
     </div>
+    
     <div class="campo">
       <label>E-mail</label>
       <input type="email" name="email" value="<%= user.email %>" />
@@ -34,7 +43,13 @@
       id="avatarPreview" alt="avatar" />
     </div>
 
+
+    
+
+
+
     <div class="campo enviar">
+    
       <input type="submit" class="btn btn-rosa" value="Guardar Cambios" />
     </div>
   </form>

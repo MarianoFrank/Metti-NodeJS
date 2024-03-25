@@ -1,11 +1,10 @@
 import express from "express";
-import "dotenv/config";
 import expressEjsLayouts from "express-ejs-layouts";
 import flash from "connect-flash";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import SequelizeStoreContructor from "connect-session-sequelize";
-
+import 'dotenv/config'
 //Le pasamos la estrucutra de la sesion
 const SequelizeStore = SequelizeStoreContructor(session.Store);
 
@@ -16,15 +15,6 @@ import userRoutes from "./routes/userRoutes.js";
 import mettiRoutes from "./routes/meetiRoutes.js";
 import passport from "./config/passport.js";
 
-db.sync({
-  //force: true
-})
-  .then(() => {
-    console.log("Base de datos conectada");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 const app = express();
 

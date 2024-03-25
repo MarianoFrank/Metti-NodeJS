@@ -62,6 +62,17 @@ router.post(
   body("*").trim().escape(),
   groupController.editGroup
 );
+router.get(
+  "/change-password/:id",
+  userController.userIsAuthenticated,
+  adminController.formChangePassword
+);
+router.post(
+  "/change-password/:id",
+  userController.userIsAuthenticated,
+  adminController.changePassword
+);
+
 //Eliminar
 router.post(
   "/delete-group",

@@ -1,0 +1,35 @@
+version: '1'
+services:
+  metti:
+    build: .
+    ports:
+      - 3000:80
+      - 2525:2525
+    volumes:
+      - .:/home/app
+    environment:
+      - PORT=80
+      - DB_NAME=metti
+      - DB_USER=postgres
+      - DB_PASS=root
+      - DB_HOST=db
+      - DB_PORT=5432
+      - SESSION_SECRET=secretito
+      - SESSION_KEY=llavesita
+      - EMAIL_USER=aa7a3ca3b3d748
+      - EMAIL_PASS=9e40c9c802ab0a
+      - EMAIL_HOST=sandbox.smtp.mailtrap.io
+      - EMAIL_PORT=2525
+      - TOKEN_SECRET=secretote
+  db:
+    image: postgis/postgis:16-3.4-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+ db_data:
+

@@ -6,6 +6,10 @@ class User extends Model {
   validatePassword(password) {
     return bcrypt.compareSync(password, this.password);
   }
+
+  hashPasswordManualy(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(12));
+  }
 }
 
 User.init(
@@ -53,7 +57,7 @@ User.init(
     tableName: "users",
     hooks: {
       beforeCreate: (user) => {
-        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(12));
+        user.password = user.hashPasswordManualy(user.password);
       },
     },
   }
