@@ -1,7 +1,7 @@
 version: '1'
 services:
   web:
-    image: metti:1
+    build: .
     ports:
       - 80:80
       - 2525:2525
