@@ -4,8 +4,6 @@ RUN mkdir -p /home/app
 
 WORKDIR /home/app
 
-RUN touch /tmp/trigger
-
 COPY package*.json .
 
 RUN npm install
