@@ -8,8 +8,6 @@ COPY . .
 
 RUN npm install
 
-EXPOSE 80
-EXPOSE 2525
 
 CMD ["npm run server"]
 
