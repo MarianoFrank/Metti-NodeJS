@@ -1,9 +1,0 @@
-version: '1'
-services:
-  web:
-    build: .
-    ports:
-      - 80:80
-      - 2525:2525
-    restart: always
-
