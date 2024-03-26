@@ -5,8 +5,7 @@ services:
     ports:
       - 80:80
       - 2525:2525
-    depends_on:
-      - db
+    restart: always
   db:
     image: postgis/postgis:16-3.4-alpine
     ports:

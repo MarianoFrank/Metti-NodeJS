@@ -8,4 +8,8 @@ COPY . .
 
 RUN npm install
 
-CMD ["npm","run","server"]
+COPY wait-for-it.sh .
+RUN chmod +x wait-for-it.sh
+
+CMD ["./wait-for-it.sh" , "db:5432" , "--strict" , "--timeout=300" , "--" , "npm run server"]
+
