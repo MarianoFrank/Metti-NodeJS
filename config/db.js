@@ -1,7 +1,6 @@
 import { Sequelize } from "sequelize";
 import "dotenv/config";
 
-
 const db = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -14,21 +13,14 @@ const db = new Sequelize(
   }
 );
 
-try {
-  await db.authenticate();
-  console.log("Base de datos conectada correctamente ✅.");
+//Crea la exension postgis por si no existe
+  // try {
+  //   await db.query("CREATE EXTENSION IF NOT EXISTS postgis;");
+  //   console.log("Extensión postgis creada correctamente ✅");
+  // } catch (error) {
+  //   console.error("Error al crear la extensión postgis❗:", error);
+  // }
 
-  
-  await db.query("CREATE EXTENSION IF NOT EXISTS postgis;")
-    .then(() => {
-      console.log("Extensión postgis creada correctamente");
-    })
-    .catch((error) => {
-      console.error("Error al crear la extensión postgis:", error);
-    });
-} catch (error) {
-  console.error("Error al conectar la base de datos ❌:", error);
-  process.exit(1);
-}
+
 
 export default db;

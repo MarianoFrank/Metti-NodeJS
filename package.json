@@ -43,6 +43,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-sanitizer": "^1.0.6",
     "express-session": "^1.18.0",
+    "express-session-sequelize": "^2.3.0",
     "express-validator": "^7.0.1",
     "gulp": "^4.0.2",
     "gulp-postcss": "^10.0.0",

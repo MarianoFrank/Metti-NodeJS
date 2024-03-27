@@ -15,6 +15,8 @@ router.get("/register", userController.registerForm);
 
 router.get("/confirm-account/:token", userController.confirmAccount);
 
+router.get("/logout", userController.logout);
+
 //Private
 router.get(
   "/dashboard",

@@ -101,7 +101,7 @@ p {
   width: 100%;
   display: block;
   flex: 0 0 100%;
-  border-radius: .85rem;
+  border-radius: .5rem;
 }
 
 @media (min-width: 768px) {
@@ -897,7 +897,7 @@ img {
   max-width: 100%;
 }
 
-.editor-avatar{
+.editor-avatar {
   width: 100vw;
   height: 100vh;
   display: none;
@@ -907,12 +907,22 @@ img {
   justify-content: center;
   top: 0;
   left: 0;
-  background-color: #2a2a2a5d;
+  background-color: #2a2a2adf;
+  display: none;
+  gap: 2rem;
 }
 
-.editor-avatar .lienzo{
-  max-width: 80rem;
+.editor-avatar .lienzo {
+  max-width: 60rem;
   height: auto;
+  overflow: hidden;
+  border-radius: .5rem;
+
+}
+
+.editor-avatar .actions{
+  display: flex;
+  gap: 2rem;
 }
 
 .cropper-view-box,
@@ -922,6 +932,46 @@ img {
 
 /* The css styles for `outline` do not follow `border-radius` on iOS/Safari (#979). */
 .cropper-view-box {
-    outline: 0;
-    box-shadow: 0 0 0 1px #39f;
+  outline: 0;
+  box-shadow: 0 0 0 1px #39f;
+}
+
+.avatar-btn-containter {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.button-wrapper {
+  position: relative;
+
+}
+
+.button-wrapper span.label {
+  display: block;
+  color: white;
+  z-index: 0;
+  background: #68d391;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: .5rem;
+}
+
+#avatar {
+  display: block;
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#avatarPreview {
+  max-width: 10rem;
+  height: auto;
 }

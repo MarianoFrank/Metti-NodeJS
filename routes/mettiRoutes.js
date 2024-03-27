@@ -2,43 +2,43 @@ import express from "express";
 import { body } from "express-validator";
 
 import * as userController from "../controllers/userController.js";
-import * as meetiController from "../controllers/meetiController.js";
+import * as metiController from "../controllers/metiController.js";
 
 const router = express.Router();
 //Grupos
 //Create
 router.get(
-  "/new-meeti",
+  "/new-meti",
   userController.userIsAuthenticated,
-  meetiController.formNewMeeti
+  metiController.formNewMeti
 );
 router.post(
-  "/new-meeti",
+  "/new-meti",
   userController.userIsAuthenticated,
   body("*").trim().escape(),
   body("coordenadas").unescape(),
-  meetiController.createMeeti
+  metiController.createMeti
 );
 //Edit
 router.get(
-  "/edit-meeti/:id",
+  "/edit-meti/:id",
   userController.userIsAuthenticated,
-  meetiController.formEditMeeti
+  metiController.formEditMeti
 );
 
 router.post(
-  "/edit-meeti/:id",
+  "/edit-meti/:id",
   userController.userIsAuthenticated,
   body("*").trim().escape(),
   body("coordenadas").unescape(),
-  meetiController.editMeeti
+  metiController.editMeti
 );
 //Eliminar
 router.post(
-  "/delete-meeti",
+  "/delete-meti",
   userController.userIsAuthenticated,
   body("*").trim().escape(),
-  meetiController.deleteMeeti
+  metiController.deleteMeti
 ); //Api para eliminar
 
 export default router;

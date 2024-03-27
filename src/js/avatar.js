@@ -2,10 +2,11 @@ import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
 
 window.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("avatar");
+  let input = document.getElementById("avatar");
   const lienzo = document.querySelector(".lienzo");
   const editorModal = document.querySelector(".editor-avatar");
   const buttonSave = document.querySelector(".editor-avatar .save");
+  const buttonCancel = document.querySelector(".editor-avatar .cancel");
   const imagenPreview = document.getElementById("avatarPreview");
 
   if (!input) {
@@ -69,7 +70,7 @@ window.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  input.onchange = function () {
+  function handlerChange() {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = function (event) {
@@ -81,5 +82,32 @@ window.addEventListener("DOMContentLoaded", () => {
       };
       reader.readAsDataURL(input.files[0]);
     }
+  }
+
+  function removeAllChildren(parent) {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+  }
+
+  input.onchange = handlerChange;
+
+  function emptyFileInput() {
+    const newInput = document.createElement("input");
+    newInput.type = input.type;
+    newInput.id = input.id;
+    newInput.accept = input.accept;
+    newInput.name = input.name;
+    newInput.onchange = handlerChange;
+
+    input.parentNode.replaceChild(newInput, input);
+    input = newInput;
+
+    removeAllChildren(lienzo);
+  }
+
+  buttonCancel.onclick = function () {
+    editorModal.style.display = "none";
+    emptyFileInput();
   };
 });

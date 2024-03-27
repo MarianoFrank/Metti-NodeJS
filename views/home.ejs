@@ -1,1 +1,84 @@
-<h1><%- pageName %></h1>
+<div class="hero">
+  <h1>Encuentra o crea un grupo para compartir lo que más te gusta</h1>
+  <a href="/crear-cuenta" class="btn btn-amarillo">Obtener Cuenta</a>
+</div>
+
+<div class="buscador-inicio">
+  <div class="contenedor">
+    <h2>Busca un grupo en tu ciudad</h2>
+    <form action="#">
+      <select name="categoria">
+        <option selected disabled value="">-- Elige una categoria --</option>
+        <% categorias.forEach(categoria => { %>
+        <option value="<%= categoria.id %>"><%= categoria.name %></option>
+        <% }); %>
+      </select>
+      <input type="text" name="nombre" placeholder="Nombre Meti" />
+      <input type="text" name="ciudad" placeholder="Ciudad" />
+      <input type="text" name="pais" placeholder="País" />
+      <input type="submit" value="Buscar" class="btn btn-rosa" />
+    </form>
+  </div>
+</div>
+
+<% if(metis.length > 0){ %>
+<div class="contenedor">
+  <h2>Próximos Meti's</h2>
+  <div class="grid columnas-md-3">
+    <% metis.forEach(meti => { %>
+    <div class="card">
+      <img src="<%= `uploads/${meti.grupo.imagen}` %>" />
+      <div class="card-texto">
+        <p class="fecha"><%= %></p>
+        <a href="#">
+          <h3><%= meti.fecha %></h3>
+        </a>
+        <div class="info-autor">
+          <div class="imagen"></div>
+          <div class="informacion">
+            <p>Organizado por:</p>
+            <p class="autor"><%= meti.user.name %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
+<% } %>
+
+<main class="bg-gris categorias">
+  <h2>Encuentra Grupos por Categoría</h2>
+
+  <div class="contenedor">
+    <ul class="listado-categorias grid columnas-2 columnas-md-3">
+      <% categorias.forEach(categoria => { %>
+      <li>
+        <a href="#">
+          <img src="<%- `/img/categoria_${categoria.id}.jpg` %>" />
+          <p><%= categoria.name %></p>
+        </a>
+      </li>
+      <% }); %>
+    </ul>
+  </div>
+</main>
+
+<div class="meti-bg">
+  <div class="contenedor meti grid columnas-md-2">
+    <section>
+      <h3>Crea un grupo</h3>
+      <p>
+        Comparte lo que te gusta o tu pasión con los demás, crea tu propio grupo
+        hoy mismo sin costos
+      </p>
+    </section>
+    <section>
+      <h3>Únete a un grupo</h3>
+      <p>
+        Conoce personas con tus mismos gustos y pasiones, únete a un grupo ya
+        existente y recibe notificaciones sobre próximos eventos
+      </p>
+    </section>
+  </div>
+</div>

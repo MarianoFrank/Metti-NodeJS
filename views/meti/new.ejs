@@ -1,10 +1,10 @@
 <main class="contenedor contenedor-formularios">
   <h1><%- pageName %></h1>
-  <form class="default-form" action="/new-meeti" method="POST">
-    <legend>Sobre el Meeti</legend>
+  <form class="default-form" action="/new-meti" method="POST">
+    <legend>Sobre el Meti</legend>
     <div class="campo">
       <label>Grupo</label>
-      <select name="grupoId">
+      <select name="GrupoId">
         <option value="" disabled selected>-- Selecciona Grupo --</option>
         <% grupos.forEach(grupo => { %>
         <option value="<%- grupo.id  %>"><%- grupo.name %></option>
@@ -13,7 +13,7 @@
     </div>
     <div class="campo">
       <label>Titulo</label>
-      <input type="text" name="titulo" placeholder="Titulo Meeti" />
+      <input type="text" name="titulo" placeholder="Titulo Meti" />
     </div>
     <div class="campo">
       <label>Invitado</label>
@@ -26,11 +26,11 @@
     <div class="columnas-2 grid">
       <div class="campo">
         <label>Fecha</label>
-        <input type="date" name="fecha" placeholder="Fecha Meeti" />
+        <input type="date" name="fecha" placeholder="Fecha Meti" />
       </div>
       <div class="campo">
         <label>Hora</label>
-        <input type="time" name="hora" placeholder="Hora Meeti" />
+        <input type="time" name="hora" placeholder="Hora Meti" />
       </div>
     </div>
     <div class="campo">
@@ -39,7 +39,7 @@
         type="number"
         min="1"
         name="cupo"
-        placeholder="Cupo Meeti (si aplica)"
+        placeholder="Cupo Meti (si aplica)"
       />
     </div>
     <div class="campo descripcion">
@@ -50,14 +50,14 @@
       </div>
     </div>
 
-    <legend>Ubicación Meeti</legend>
+    <legend>Ubicación Meti</legend>
     <div class="campo buscador">
-      <label>Dirección del Meeti</label>
+      <label>Dirección del Meti</label>
       <div class="contenedor-input">
         <input
           type="text"
           id="busqueda"
-          placeholder="Coloca la direccio del Meeti"
+          placeholder="Coloca la direccio del Meti"
         />
         <ul class="resultados-busqueda" style="display: none"></ul>
         <small
@@ -111,7 +111,7 @@
     </div>
     <input type="hidden" name="coordenadas" value="" id="coordenadas" />
     <div class="campo enviar">
-      <input type="submit" class="btn btn-rosa" value="Crear Meeti" />
+      <input type="submit" class="btn btn-rosa" value="Crear Meti" />
     </div>
   </form>
 </main>

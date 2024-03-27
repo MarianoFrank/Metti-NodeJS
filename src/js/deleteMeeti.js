@@ -2,7 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 window.addEventListener("DOMContentLoaded", () => {
-  const btnsDeleteGroup = document.querySelectorAll("#deleteMeeti");
+  const btnsDeleteGroup = document.querySelectorAll("#deleteMeti");
 
   function eliminarElemento(element) {
     element.remove();
@@ -10,10 +10,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
   btnsDeleteGroup.forEach((btnDeleteGroup) => {
     btnDeleteGroup.addEventListener("click", (e) => {
-      const id = e.target.dataset.meetiId;
+      const id = e.target.dataset.metiId;
 
       axios
-        .post("/delete-meeti", {
+        .post("/delete-meti", {
           id,
         })
         .then(function (response) {

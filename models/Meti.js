@@ -6,9 +6,9 @@ import slug from "slug";
 import User from "./User.js";
 import Grupo from "./Grupo.js";
 
-class Meeti extends Model {}
+class Meti extends Model {}
 
-Meeti.init(
+Meti.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -68,12 +68,12 @@ Meeti.init(
   },
   {
     sequelize: db,
-    modelName: "Meeti",
-    tableName: "meetis",
+    modelName: "Meti",
+    tableName: "metis",
     hooks: {
-      beforeCreate: (meeti) => {
-        const url = slug(meeti.titulo).toLowerCase();
-        meeti.slug = `${url}-${shortid.generate()}`;
+      beforeCreate: (meti) => {
+        const url = slug(meti.titulo).toLowerCase();
+        meti.slug = `${url}-${shortid.generate()}`;
       },
     },
   }
@@ -81,12 +81,12 @@ Meeti.init(
 
 //relaciones
 
-Meeti.belongsTo(User, { foreignKey: "UserId", allowNull: false });
+Meti.belongsTo(User, { foreignKey: "UserId", allowNull: false });
 
-Meeti.belongsTo(Grupo, {
+Meti.belongsTo(Grupo, {
   foreignKey: "GrupoId",
   allowNull: false,
   validate: { notEmpty: { msg: "Seleccione un grupo" } },
 });
 
-export default Meeti;
+export default Meti;

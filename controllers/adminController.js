@@ -1,5 +1,5 @@
 import Grupo from "../models/Grupo.js";
-import Meeti from "../models/Meeti.js";
+import Meti from "../models/Meti.js";
 import { Op } from "sequelize";
 import moment from "moment";
 import User from "../models/User.js";
@@ -11,10 +11,10 @@ moment.locale("es");
 export const renderDashboard = async (req, res) => {
   const fechaHoy = moment().format("YYYY-MM-DD");
 
-  const [grupos, meetis, oldMeetis] = await Promise.all([
+  const [grupos, metis, oldMetis] = await Promise.all([
     Grupo.findAll({ where: { UserId: req.user.id } }),
-    //meetis fecha mayor o igual a "hoy"
-    Meeti.findAll({
+    //metis fecha mayor o igual a "hoy"
+    Meti.findAll({
       where: {
         UserId: req.user.id,
         fecha: { [Op.gte]: fechaHoy },
@@ -22,7 +22,7 @@ export const renderDashboard = async (req, res) => {
       order: [["fecha", "ASC"]],
     }),
     //metis ya pasados
-    Meeti.findAll({
+    Meti.findAll({
       where: {
         UserId: req.user.id,
         fecha: { [Op.lt]: fechaHoy },
@@ -35,8 +35,8 @@ export const renderDashboard = async (req, res) => {
     pageName: "dashboard",
     messages: req.flash(),
     grupos,
-    meetis,
-    oldMeetis,
+    metis,
+    oldMetis,
     moment, //funcion moment
   });
 };
@@ -109,16 +109,24 @@ export const changePassword = async (req, res) => {
       return res.redirect(`/change-password/${user.id}`);
     }
 
-    //En este punto los password son ingules y la clave actual es correcta, entonces reemplazamos
+    req.logout(async function (err) {
+      if (err) {
+        console.log(err);
+        req.flash("error", "Lo siento ha ocurrido un error, intente mas tarde");
+        return res.redirect("/dashboard");
+      }
 
-    const newPassHashed = user.hashPasswordManualy(req.body.nuevo);
+      //En este punto los password son ingules y la clave actual es correcta, entonces reemplazamos
 
-    await user.update({
-      password: newPassHashed,
+      const newPassHashed = user.hashPasswordManualy(req.body.nuevo);
+
+      await user.update({
+        password: newPassHashed,
+      });
+
+      req.flash("success", "Se cambio la contraseña, inicie sesion nuevamente");
+      return res.redirect("/login");
     });
-    req.flash("success", "Contraseña cambiada");
-
-    return res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
     req.flash("error", "Ha ocurrido un error intentelo mas tarde");

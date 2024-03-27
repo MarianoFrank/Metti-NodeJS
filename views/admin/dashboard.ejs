@@ -2,63 +2,63 @@
   <h1><%= pageName %></h1>
   <div class="contenedor-botones">
     <a href="/new-group" class="btn btn-amarillo">Nuevo Grupo</a>
-    <a href="/new-meeti" class="btn btn-azul">Nuevo Metti</a>
+    <a href="/new-meti" class="btn btn-azul">Nuevo Meti</a>
     <a href="/edit-profile" class="btn btn-rosa">Editar Perfil</a>
   </div>
 
   <div class="seccion-admin">
-    <h2>Proximos Meeti's</h2>
+    <h2>Proximos Meti's</h2>
     <ul>
-      <% if(meetis.length > 0){ %> <% meetis.forEach(meeti => { %>
+      <% if(metis.length > 0){ %> <% metis.forEach(meti => { %>
       <li>
         <div class="informacion-admin">
           <p class="fecha">
-            <%- moment(meeti.fecha + " "+ meeti.hora).format('LLLL') %>
+            <%- moment(meti.fecha + " "+ meti.hora).format('LLLL') %>
           </p>
-          <h3><%- meeti.titulo %></h3>
-          <small><%- meeti.interesados %></small>
+          <h3><%- meti.titulo %></h3>
+          <small><%- meti.interesados %></small>
         </div>
         <div class="acciones contenedor-botones">
-          <a href="/edit-meeti/<%- meeti.id %>" class="btn btn-verde">Editar</a>
-          <a href="/asistentes/<%- meeti.id %>" class="btn btn-azul2"
+          <a href="/edit-meti/<%- meti.id %>" class="btn btn-verde">Editar</a>
+          <a href="/asistentes/<%- meti.id %>" class="btn btn-azul2"
             >Asistentes</a
           >
           <button
-            data-meeti-id="<%- meeti.id %>"
+            data-meti-id="<%- meti.id %>"
             class="btn btn-rojo"
-            id="deleteMeeti"
+            id="deleteMeti"
           >
             Eliminar
           </button>
         </div>
       </li>
       <% }) %> <% } else{ %>
-      <p>No tienes meetis, crea uno.</p>
+      <p>No tienes metis, crea uno.</p>
       <% } %>
     </ul>
   </div>
 
   <div class="seccion-admin">
-    <h2>Meeti's Pasados</h2>
+    <h2>Meti's Pasados</h2>
     <ul>
-      <% if(oldMeetis.length > 0){ %> <% oldMeetis.forEach(meeti => { %>
+      <% if(oldMetis.length > 0){ %> <% oldMetis.forEach(meti => { %>
       <li>
         <div class="informacion-admin">
           <p class="fecha">
-            <%- moment(meeti.fecha + " "+ meeti.hora).format('LLLL') %>
+            <%- moment(meti.fecha + " "+ meti.hora).format('LLLL') %>
           </p>
-          <h3><%- meeti.titulo %></h3>
-          <small><%- meeti.interesados %></small>
+          <h3><%- meti.titulo %></h3>
+          <small><%- meti.interesados %></small>
         </div>
         <div class="acciones contenedor-botones">
-          <a href="/edit-meeti/<%- meeti.id %>" class="btn btn-verde">Editar</a>
-          <a href="/asistentes/<%- meeti.id %>" class="btn btn-azul2"
+          <a href="/edit-meti/<%- meti.id %>" class="btn btn-verde">Editar</a>
+          <a href="/asistentes/<%- meti.id %>" class="btn btn-azul2"
             >Asistentes</a
           >
           <button
-            data-meeti-id="<%- meeti.id %>"
+            data-meti-id="<%- meti.id %>"
             class="btn btn-rojo"
-            id="deleteMeeti"
+            id="deleteMeti"
           >
             Eliminar
           </button>

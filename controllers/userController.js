@@ -176,3 +176,15 @@ export const userIsAuthenticated = (req, res, next) => {
 
   return res.redirect("/login");
 };
+
+export const logout = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+      req.flash("success", "Ha ocurrido un error, intente mas tarde");
+      return res.redirect("/dasboard");
+    }
+    req.flash("success", "Sesión cerrada correctamente");
+    return res.redirect("/login");
+  });
+};
