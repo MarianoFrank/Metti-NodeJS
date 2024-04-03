@@ -14,12 +14,12 @@ const db = new Sequelize(
 );
 
 //Crea la exension postgis por si no existe
-  // try {
-  //   await db.query("CREATE EXTENSION IF NOT EXISTS postgis;");
-  //   console.log("Extensión postgis creada correctamente ✅");
-  // } catch (error) {
-  //   console.error("Error al crear la extensión postgis❗:", error);
-  // }
+   try {
+     await db.query("CREATE EXTENSION IF NOT EXISTS postgis;");
+     console.log("Extensión postgis creada correctamente ✅");
+   } catch (error) {
+     console.error("Error al crear la extensión postgis❗:", error);
+   }
 
 
 

@@ -1,5 +1,6 @@
 html {
   box-sizing: border-box;
+  font-size: 90%;
 }
 
 *,
@@ -10,29 +11,32 @@ html {
 
 body {
   font-family: "Nunito Sans", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 400;
+
   font-optical-sizing: auto;
   font-style: normal;
   font-variation-settings: "wdth" 100, "YTLC" 500;
   color: #2a2a2a;
 }
 
-h1,
-h2 {
-  font-family: "Staatliches", cursive;
-  text-align: center;
-}
 
 h1 {
-  font-size: 3.2rem;
+
+  font-size: 3rem;
+  margin-bottom: 5rem;
+  margin-top: 0;
+  text-transform: uppercase;
+  text-align: right;
 }
 
 h2 {
-  font-size: 2.8rem;
+
+  font-size: 2.5rem;
 }
 
 h3 {
   text-align: left;
-  font-family: "Raleway", sans-serif;
   font-size: 2rem;
 }
 
@@ -40,9 +44,16 @@ a {
   text-decoration: none;
   color: black;
 }
-
+a:hover h3{
+  color: #39f;
+}
 .contenedor {
   max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contenedor.panel-administracion {
+  max-width: 60rem;
   margin: 0 auto;
 }
 
@@ -57,6 +68,18 @@ ul {
 
 p {
   line-height: 2;
+}
+
+.logo {
+  height: 6rem;
+  margin: 2rem;
+}
+
+a,
+p,
+li,
+span {
+  font-size: 1.2rem;
 }
 
 /*** COMPONENTES **/
@@ -91,54 +114,42 @@ p {
 
 /** botones **/
 .btn {
-  padding: 1rem 4rem;
+  padding: .5rem 1rem;
   text-align: center;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 1rem;
-  border: none;
-  background-color: transparent;
-  color: white;
-  width: 100%;
-  display: block;
-  flex: 0 0 100%;
-  border-radius: .5rem;
+  color: #2a2a2a;
+  display: inline-block;
+  border-radius: 2rem;
+  border: 1px solid rgba(92, 92, 92, 0.2);
+  width: fit-content;
+  min-width: 10rem;
+  cursor: pointer;
+  transition: transform .3s ease;
 }
 
-@media (min-width: 768px) {
-  .btn {
-    width: auto;
-    display: inline-block;
-    flex: 0 0 auto;
-  }
-}
 
 .btn:hover {
-  cursor: pointer;
+
 }
 
 .btn-amarillo {
-  background-color: #f6e05e;
+  background-color: #ffe99a;
+
 }
 
 .btn-rosa {
-  background-color: #f472b6;
+  background-color: #FF99B3;
 }
 
 .btn-azul {
-  background-color: #90cdf4;
-}
-
-.btn-naranja {
-  background-color: #fca5a5;
+  background-color: #99CFFF;
 }
 
 .btn-verde {
-  background-color: #68d391;
+  background-color: #99FFBD;
 }
 
-.btn-azul2 {
-  background-color: #81e6d9;
-}
 
 .btn-rojo {
   background-color: #f56565;
@@ -183,7 +194,6 @@ p {
   font-size: 1.8rem;
   margin: 0.6rem 0;
   padding: 0.5rem 0;
-  font-family: "Raleway", sans-serif;
   font-weight: 700;
   color: #484349;
 }
@@ -226,7 +236,6 @@ p {
 /** layout**/
 .site-header {
   text-align: center;
-  margin-top: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -425,7 +434,8 @@ main.categorias {
 
 /** Footer **/
 .site-footer {
-  padding: 1rem 0 2rem 0;
+  margin-top: 5rem;
+  padding: 5rem 0 5rem 0;
   text-align: center;
 }
 
@@ -482,6 +492,7 @@ main.contenedor-formularios {
 .default-form .campo select {
   margin: 0;
   flex: 1;
+
 }
 
 .default-form legend {
@@ -491,12 +502,18 @@ main.contenedor-formularios {
   margin: 2.5rem 0;
 }
 
+.descripcion {
+  margin: 1rem 0;
+}
+
 .default-form.comentarios .campo {
   align-items: flex-start;
 }
 
 .default-form .campo textarea {
   height: 10rem;
+  border: none;
+  resize: none;
 }
 
 .contenedor-editor {
@@ -554,36 +571,26 @@ trix-toolbar .trix-button--icon-strike {
 }
 
 /** Administración **/
-.panel-administracion {
-  padding: 4rem 0;
-}
+
 
 .contenedor-botones {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-}
-
-.contenedor-botones a {
-  margin-bottom: 1rem;
 }
 
 @media (min-width: 768px) {
   .contenedor-botones {
     display: flex;
     flex-direction: row;
-    gap: 2rem;
+
+    gap: 1.2rem;
+    width: 100%;
   }
 
-  .contenedor-botones a {
-    flex: 1;
-    margin-bottom: 0;
-    margin-right: 2rem;
+  .acciones.contenedor-botones {
+    justify-content: flex-end;
   }
 
-  .contenedor-botones a:last-of-type {
-    margin-right: 0;
-  }
 }
 
 /** Listado de Eventos admin**/
@@ -602,9 +609,10 @@ trix-toolbar .trix-button--icon-strike {
 
 @media (min-width: 768px) {
   .seccion-admin li {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
+    justify-content: space-between;
   }
 }
 
@@ -614,8 +622,7 @@ trix-toolbar .trix-button--icon-strike {
 }
 
 .informacion-admin {
-  flex: 0 0 35%;
-  margin-right: 2rem;
+  flex: 0 0 40%;
 }
 
 .informacion-admin small {
@@ -623,13 +630,7 @@ trix-toolbar .trix-button--icon-strike {
   font-size: 0.8rem;
 }
 
-.acciones.contenedor-botones a {
-  flex: 1;
-}
 
-.acciones.contenedor-botones {
-  width: 100%;
-}
 
 /** Single Eventos **/
 
@@ -646,7 +647,6 @@ trix-toolbar .trix-button--icon-strike {
 }
 
 .resumen-evento h1 {
-  font-family: "Raleway", sans-serif;
   text-align: left;
   font-size: 2rem;
 }
@@ -692,10 +692,14 @@ trix-toolbar .trix-button--icon-strike {
 
   .contenido-evento .informacion-evento {
     flex: 0 0 60%;
+
   }
 
   .contenido-evento .informacion {
     flex: 0 0 calc(40% - 2rem);
+    position: sticky;
+    top: 3rem;
+
   }
 }
 
@@ -739,8 +743,10 @@ trix-toolbar .trix-button--icon-strike {
 
 .comentario .texto {
   padding: 2rem;
-  border: 1px solid #c7c7c7;
+  border-radius: .5rem;
   background-color: white;
+  width: 100%;
+
 }
 
 .comentario .texto p {
@@ -749,16 +755,20 @@ trix-toolbar .trix-button--icon-strike {
 
 /** Sidebar **/
 .contenido-evento aside {
+  border-radius: .5rem;
   background-color: white;
-  border: 1px solid #c7c7c7;
 }
 
-.contenido-evento aside>div {
-  padding: 1rem 0 1rem 5rem;
-  background-size: 50px;
+.contenido-evento aside>div:nth-child(1) {
+  padding: 0rem 0 0rem 2rem;
+  background-size: 20px;
   background-position: center left;
   background-repeat: no-repeat;
-  margin: 2rem;
+  margin: 1rem;
+}
+
+.contenido-evento aside>div:nth-child(2) {
+  padding: 0 1rem 1rem 1rem;
 }
 
 .contenido-evento aside p {
@@ -770,9 +780,6 @@ aside .fecha {
   margin-bottom: 2rem;
 }
 
-aside .ubicacion {
-  background-image: url(../img/icono-ubicacion.svg);
-}
 
 aside img {
   display: block;
@@ -850,6 +857,13 @@ trix-editor ul {
   flex-direction: column;
 }
 
+.mapa {
+  width: 100%;
+  height: 20rem;
+  border-radius: .5rem;
+  margin-bottom: 2rem;
+}
+
 #mapa {
   width: 100%;
   height: 20rem;
@@ -920,7 +934,7 @@ img {
 
 }
 
-.editor-avatar .actions{
+.editor-avatar .actions {
   display: flex;
   gap: 2rem;
 }

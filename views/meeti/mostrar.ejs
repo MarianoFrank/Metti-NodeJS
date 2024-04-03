@@ -1,0 +1,97 @@
+<div class="encabezado-evento">
+  <div class="contenedor">
+    <div class="resumen-evento">
+      <h1><%= meeti.titulo %></h1>
+      <div class="info-autor">
+        <div class="imagen">
+          <% if(meeti.User.image){ %>
+          <img
+            src="<%= `/uploads/${meeti.User.image}` %>"
+            alt="<%= meeti.User.name %>"
+          />
+          <% } %>
+        </div>
+
+        <div class="informacion">
+          <p>Organizado por:</p>
+          <p class="autor">
+            <a href="/user/<%= meeti.User.id %>"> <%= meeti.User.name %> </a>
+            Creador de:
+            <a href="/grupo/<%= meeti.Grupo.id %>"><%= meeti.Grupo.name %></a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--Resumen evento-->
+    <div class="pregunta-asistencia">
+      <% if(user.id ){ %>
+      <p>¿Asistirás?</p>
+      <a href="" class="btn btn-azul">Si</a>
+      <% } else {%>
+        <p><a href="/login">Inicia sesión</a>, para confirmar tu asistencia</p>
+        <%  }%>
+    </div>
+  </div>
+</div>
+
+<main class="contenido-evento">
+  <div class="contenedor">
+    <div class="informacion-evento">
+      <img src="/uploads/<%= meeti.Grupo.imagen %>" alt="" />
+      <div class="descripcion"><%- meeti.descripcion %></div>
+      <div class="asistentes">
+        <div class="titulo">
+          <h3><%= meeti.Asistentes.length %> Asistentes</h3>
+          <a href="/asistentes/<%= meeti.slug %>">Ver Todos</a>
+        </div>
+      </div>
+
+      <div class="comentarios">
+        <h2>Comentarios</h2>
+        <div class="comentario">
+          <div class="imagen"></div>
+          <div class="texto">
+            <p>hola</p>
+            <p>Escrito por: <span>Mariano</span></p>
+            <input type="button" value="Eliminar" class="btn btn-azul" />
+          </div>
+        </div>
+        <!--Comentario-->
+        <div class="comentario">
+          <div class="imagen"></div>
+          <div class="texto">
+            <p>hola</p>
+            <p>Escrito por: <span>Mariano</span></p>
+            <input type="button" value="Eliminar" class="btn btn-azul" />
+          </div>
+        </div>
+        <!--Comentario-->
+
+        <!-- Formulario Comentarios -->
+        <form action="" class="default-form">
+          <legend>Agrega un comentario</legend>
+          <div class="campo">
+            <label for="comentario">Comentario</label>
+            <textarea name="comentario"></textarea>
+          </div>
+          <div class="campo enviar">
+            <input type="submit" value="Enviar" class="btn btn-rosa" />
+          </div>
+        </form>
+      </div>
+      <!-- Comentarios -->
+    </div>
+    <!--informacion evento-->
+    <aside class="informacion">
+      <div class="fecha">
+        <p><%= moment(`${meeti.fecha} ${meeti.hora}`).format("LLLL") %></p>
+      </div>
+      <div class="ubicacion">
+        <p>Cargando...</p>
+        <input type="hidden" id="chords" value="<%= meeti.coordenadas.coordinates %>">
+        <div class="mapa"></div>
+        <a target="_blank" href="https://www.google.com/maps?q=<%= meeti.coordenadas.coordinates %>" class="btn btn-verde">Ver en GoogleMaps</a>
+      </div>
+    </aside>
+  </div>
+</main>

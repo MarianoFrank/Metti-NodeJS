@@ -2,43 +2,49 @@ import express from "express";
 import { body } from "express-validator";
 
 import * as userController from "../controllers/userController.js";
-import * as metiController from "../controllers/metiController.js";
+import * as meetiController from "../controllers/meetiController.js";
+
+import * as meetiControllerFE from "../controllers/frontend/meetiControllerFE.js";
+
 
 const router = express.Router();
 //Grupos
 //Create
 router.get(
-  "/new-meti",
+  "/new-meeti",
   userController.userIsAuthenticated,
-  metiController.formNewMeti
+  meetiController.formNewMeeti
 );
 router.post(
-  "/new-meti",
+  "/new-meeti",
   userController.userIsAuthenticated,
   body("*").trim().escape(),
   body("coordenadas").unescape(),
-  metiController.createMeti
+  meetiController.createMeeti
 );
 //Edit
 router.get(
-  "/edit-meti/:id",
+  "/edit-meeti/:id",
   userController.userIsAuthenticated,
-  metiController.formEditMeti
+  meetiController.formEditMeeti
 );
 
 router.post(
-  "/edit-meti/:id",
+  "/edit-meeti/:id",
   userController.userIsAuthenticated,
   body("*").trim().escape(),
   body("coordenadas").unescape(),
-  metiController.editMeti
+  meetiController.editMeeti
 );
 //Eliminar
 router.post(
-  "/delete-meti",
+  "/delete-meeti",
   userController.userIsAuthenticated,
   body("*").trim().escape(),
-  metiController.deleteMeti
+  meetiController.deleteMeeti
 ); //Api para eliminar
 
+
+//Frontend de un meeti
+router.get("/meeti/:slug",meetiControllerFE.mostrarMeeti);
 export default router;

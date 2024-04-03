@@ -4,3 +4,4 @@ import "./map.js";
 import "./alertas.js";
 import "./deleteMeeti.js";
 import "./avatar.js";
+import "./mapMeeti.js";

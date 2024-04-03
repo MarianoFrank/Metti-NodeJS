@@ -1,5 +1,5 @@
 import Grupo from "../models/Grupo.js";
-import Meti from "../models/Meti.js";
+import Meeti from "../models/Meeti.js";
 import { Op } from "sequelize";
 import moment from "moment";
 import User from "../models/User.js";
@@ -11,18 +11,18 @@ moment.locale("es");
 export const renderDashboard = async (req, res) => {
   const fechaHoy = moment().format("YYYY-MM-DD");
 
-  const [grupos, metis, oldMetis] = await Promise.all([
+  const [grupos, meetis, oldMeetis] = await Promise.all([
     Grupo.findAll({ where: { UserId: req.user.id } }),
-    //metis fecha mayor o igual a "hoy"
-    Meti.findAll({
+    //meetis fecha mayor o igual a "hoy"
+    Meeti.findAll({
       where: {
         UserId: req.user.id,
         fecha: { [Op.gte]: fechaHoy },
       },
       order: [["fecha", "ASC"]],
     }),
-    //metis ya pasados
-    Meti.findAll({
+    //meetis ya pasados
+    Meeti.findAll({
       where: {
         UserId: req.user.id,
         fecha: { [Op.lt]: fechaHoy },
@@ -35,8 +35,8 @@ export const renderDashboard = async (req, res) => {
     pageName: "dashboard",
     messages: req.flash(),
     grupos,
-    metis,
-    oldMetis,
+    meetis,
+    oldMeetis,
     moment, //funcion moment
   });
 };

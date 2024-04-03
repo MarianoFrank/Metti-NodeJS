@@ -15,7 +15,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        //intentamos buscar el usuario sin el campo del password
+        
         const usuario = await User.findOne({ where: { email } });
 
         if (!usuario) {

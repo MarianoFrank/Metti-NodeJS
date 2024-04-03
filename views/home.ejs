@@ -13,7 +13,7 @@
         <option value="<%= categoria.id %>"><%= categoria.name %></option>
         <% }); %>
       </select>
-      <input type="text" name="nombre" placeholder="Nombre Meti" />
+      <input type="text" name="nombre" placeholder="Nombre Meeti" />
       <input type="text" name="ciudad" placeholder="Ciudad" />
       <input type="text" name="pais" placeholder="País" />
       <input type="submit" value="Buscar" class="btn btn-rosa" />
@@ -21,23 +21,24 @@
   </div>
 </div>
 
-<% if(metis.length > 0){ %>
+<% if(meetis.length > 0){ %>
 <div class="contenedor">
-  <h2>Próximos Meti's</h2>
+  <h2>Próximos Meeti's</h2>
   <div class="grid columnas-md-3">
-    <% metis.forEach(meti => { %>
+    <% meetis.forEach(meeti => { %>
     <div class="card">
-      <img src="<%= `uploads/${meti.grupo.imagen}` %>" />
+      <img src="<%= `uploads/${meeti.Grupo.imagen}` %>" />
       <div class="card-texto">
-        <p class="fecha"><%= %></p>
-        <a href="#">
-          <h3><%= meti.fecha %></h3>
+        <% const fecha = `${meeti.fecha} ${meeti.hora}` %>
+        <p class="fecha"><%= moment(fecha).format("LLLL"); %></p>
+        <a href="<%= `/meeti/${meeti.slug}` %>">
+          <h3><%= meeti.titulo %></h3>
         </a>
         <div class="info-autor">
-          <div class="imagen"></div>
+          <div class="imagen"><img src="<%= `uploads/${meeti.User.image}` %>" alt=""></div>
           <div class="informacion">
             <p>Organizado por:</p>
-            <p class="autor"><%= meti.user.name %></p>
+            <p class="autor"><%= meeti.User.name %></p>
           </div>
         </div>
       </div>
@@ -64,8 +65,8 @@
   </div>
 </main>
 
-<div class="meti-bg">
-  <div class="contenedor meti grid columnas-md-2">
+<div class="meeti-bg">
+  <div class="contenedor meeti grid columnas-md-2">
     <section>
       <h3>Crea un grupo</h3>
       <p>

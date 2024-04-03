@@ -4,13 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Staatliches&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+   
     <!-- Normalize -->
     <link
       rel="stylesheet"
@@ -34,8 +31,12 @@
     />
 
     <!-- LeaftLet styles -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
 
     <link rel="stylesheet" href="/css/app.css" />
 
@@ -44,13 +45,11 @@
   <body>
     <header class="site-header contenedor">
       <a href="/">
-        <img src="/img/logo.png" alt="Logo Metti" />
+        <img src="/img/logo.png" alt="Logo Metti" class="logo"/>
       </a>
-      <% if(locals.userIsAuthenticated){ %>
-        <%- include("./partials/nav-autenticado.ejs") %>
-        <% }else{ %>
-          <%- include("./partials/nav.ejs") %>
-          <% } %>
+      <% if(locals.userIsAuthenticated){ %> <%-
+      include("./partials/nav-autenticado.ejs") %> <% }else{ %> <%-
+      include("./partials/nav.ejs") %> <% } %>
     </header>
 
     <!-- Flash Messages -->
@@ -67,18 +66,15 @@
     <%- body %>
 
     <footer class="site-footer contenedor">
-      <% if(locals.userIsAuthenticated){ %>
-        <%- include("./partials/nav-autenticado.ejs") %>
-        <% }else{ %>
-          <%- include("./partials/nav.ejs") %>
-          <% } %>
+      <% if(locals.userIsAuthenticated){ %> <%-
+      include("./partials/nav-autenticado.ejs") %> <% }else{ %> <%-
+      include("./partials/nav.ejs") %> <% } %>
       <p class="copyright">
         Todos los derechos reservados Metti <%- locals.year %> &copy
       </p>
     </footer>
   </body>
 
-  ></script>
   <script src="/js/index.min.js"></script>
   <!-- Trix JS -->
   <script

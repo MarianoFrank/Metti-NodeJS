@@ -6,9 +6,9 @@ import slug from "slug";
 import User from "./User.js";
 import Grupo from "./Grupo.js";
 
-class Meti extends Model {}
+class Meeti extends Model {}
 
-Meti.init(
+Meeti.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -58,22 +58,18 @@ Meti.init(
         notEmpty: { msg: "Agregue una direccion" },
       },
     },
-    interesados:{
-      type:DataTypes.INTEGER,
-      defaultValue:0
-    },
     slug: {
       type: DataTypes.STRING,
     },
   },
   {
     sequelize: db,
-    modelName: "Meti",
-    tableName: "metis",
+    modelName: "Meeti",
+    tableName: "meetis",
     hooks: {
-      beforeCreate: (meti) => {
-        const url = slug(meti.titulo).toLowerCase();
-        meti.slug = `${url}-${shortid.generate()}`;
+      beforeCreate: (meeti) => {
+        const url = slug(meeti.titulo).toLowerCase();
+        meeti.slug = `${url}-${shortid.generate()}`;
       },
     },
   }
@@ -81,12 +77,19 @@ Meti.init(
 
 //relaciones
 
-Meti.belongsTo(User, { foreignKey: "UserId", allowNull: false });
+Meeti.belongsTo(User, { foreignKey: "UserId", allowNull: false });
 
-Meti.belongsTo(Grupo, {
+Meeti.belongsToMany(User, {
+  through: "asistentes_meetis",
+  tableName: "asistentes_meetis",
+  as: "Asistentes",
+  timestamps: false,
+});
+
+Meeti.belongsTo(Grupo, {
   foreignKey: "GrupoId",
   allowNull: false,
   validate: { notEmpty: { msg: "Seleccione un grupo" } },
 });
 
-export default Meti;
+export default Meeti;

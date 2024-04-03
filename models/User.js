@@ -1,13 +1,14 @@
 import { DataTypes, Model } from "sequelize";
 import db from "../config/db.js";
 import bcrypt from "bcrypt";
+import Meeti from "./Meeti.js";
 
 class User extends Model {
   validatePassword(password) {
     return bcrypt.compareSync(password, this.password);
   }
 
-  hashPasswordManualy(password){
+  hashPasswordManualy(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(12));
   }
 }
@@ -45,7 +46,7 @@ User.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    descripcion:{
+    descripcion: {
       type: DataTypes.TEXT,
     },
     token: DataTypes.TEXT,
@@ -62,5 +63,6 @@ User.init(
     },
   }
 );
+
 
 export default User;

@@ -1,13 +1,13 @@
-import { Op, where } from "sequelize";
+import { Op } from "sequelize";
 import Categoria from "../models/Categoria.js";
-import Meti from "../models/Meti.js";
+import Meeti from "../models/Meeti.js";
 import moment from "moment";
 import User from "../models/User.js";
 import Grupo from "../models/Grupo.js";
 export const home = async (req, res) => {
-  const [categorias, metis] = await Promise.all([
+  const [categorias, meetis] = await Promise.all([
     Categoria.findAll(),
-    Meti.findAll({
+    Meeti.findAll({
       where: {
         fecha: {
           [Op.gte]: moment(Date.now()).format("YYYY-MM-DD"),
@@ -19,7 +19,7 @@ export const home = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["name"],
+          attributes: ["name","image"],
         },
         {
           model: Grupo,
@@ -28,11 +28,12 @@ export const home = async (req, res) => {
       ],
     }),
   ]);
-  console.log(metis);
+  console.log(JSON.stringify(meetis));
   res.render("home", {
     pageName: "Inicio",
     messages: req.flash(),
     categorias,
-    metis,
+    meetis,
+    moment
   });
 };

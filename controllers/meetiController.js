@@ -1,16 +1,16 @@
 import Grupo from "../models/Grupo.js";
-import Meti from "../models/Meti.js";
+import Meeti from "../models/Meeti.js";
 
-export const formNewMeti = async (req, res) => {
+export const formNewMeeti = async (req, res) => {
   const grupos = await Grupo.findAll({ where: { UserId: req.user.id } });
-  res.render("meti/new", {
-    pageName: "Crear nuevo Meti",
+  res.render("meeti/new", {
+    pageName: "Crear nuevo Meeti",
     messages: req.flash(),
     grupos,
   });
 };
 
-export const createMeti = async (req, res) => {
+export const createMeeti = async (req, res) => {
   const datos = req.body;
 
   datos.UserId = req.user.id;
@@ -30,8 +30,8 @@ export const createMeti = async (req, res) => {
   }
 
   try {
-    await Meti.create(datos);
-    req.flash("success", "Meti creado correctamente");
+    await Meeti.create(datos);
+    req.flash("success", "Meeti creado correctamente");
     return res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
@@ -44,32 +44,32 @@ export const createMeti = async (req, res) => {
       req.flash("error", "Ha ocurrido un error intentelo mas tarde");
     }
 
-    return res.redirect("/new-meti");
+    return res.redirect("/new-meeti");
   }
 };
 
-export const formEditMeti = async (req, res) => {
-  const [grupos, meti] = await Promise.all([
+export const formEditMeeti = async (req, res) => {
+  const [grupos, meeti] = await Promise.all([
     Grupo.findAll({ where: { UserId: req.user.id } }),
-    Meti.findOne({
+    Meeti.findOne({
       where: { id: req.params.id, UserId: req.user.id },
     }),
   ]);
 
-  if (!meti || !grupos) {
+  if (!meeti || !grupos) {
     req.flash("error", "Operacion no válida");
     return res.redirect("/dashboard");
   }
 
-  res.render("meti/edit", {
-    pageName: `Editar Meti: ${meti.titulo}`,
+  res.render("meeti/edit", {
+    pageName: `Editar Meeti: ${meeti.titulo}`,
     messages: req.flash(),
     grupos,
-    meti,
+    meeti,
   });
 };
 
-export const editMeti = async (req, res) => {
+export const editMeeti = async (req, res) => {
   const datos = req.body;
 
   datos.UserId = req.user.id;
@@ -89,12 +89,12 @@ export const editMeti = async (req, res) => {
   }
 
   try {
-    const meti = await Meti.findOne({
+    const meeti = await Meeti.findOne({
       where: { id: req.params.id, UserId: req.user.id },
     });
 
-    await meti.update(datos);
-    req.flash("success", "Meti guardado correctamente");
+    await meeti.update(datos);
+    req.flash("success", "Meeti guardado correctamente");
     return res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
@@ -107,24 +107,24 @@ export const editMeti = async (req, res) => {
       req.flash("error", "Ha ocurrido un error intentelo mas tarde");
     }
 
-    return res.redirect("/new-meti");
+    return res.redirect("/new-meeti");
   }
 };
 
-export const deleteMeti = async (req, res) => {
+export const deleteMeeti = async (req, res) => {
   const { id } = req.body;
-  const meti = await Meti.findOne({
+  const meeti = await Meeti.findOne({
     where: { id, UserId: req.user.id },
   });
 
   //Si no es el dueño del grupo
-  if (!meti) {
+  if (!meeti) {
     return res.status(400).json({ message: "Error de validacion" });
   }
 
   try {
-    meti.destroy();
-    return res.status(200).json({ message: "Meti eliminado correctamente" });
+    meeti.destroy();
+    return res.status(200).json({ message: "Meeti eliminado correctamente" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ message: "Error del servidor" });
