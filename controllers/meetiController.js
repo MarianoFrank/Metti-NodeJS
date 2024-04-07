@@ -18,13 +18,13 @@ export const createMeeti = async (req, res) => {
   try {
     //no importa sanitizar las coordenadas, porque si no es json seguro falla
     const chords = JSON.parse(datos.coordenadas);
-    const chordsArray = [parseFloat(chords.lat), parseFloat(chords.lng)];
+    const chordsArray = [parseFloat(chords.lng), parseFloat(chords.lat)];
     console.log(chordsArray);
     datos.coordenadas = {
       type: "Point",
       coordinates: chordsArray,
     };
-  } catch (error) {
+  } catch (error) { 
     console.log("No hay coordenadas");
     datos.coordenadas = "";
   }
@@ -77,7 +77,7 @@ export const editMeeti = async (req, res) => {
   try {
     //no importa sanitizar las coordenadas, porque si no es json seguro falla
     const chords = JSON.parse(datos.coordenadas);
-    const chordsArray = [parseFloat(chords.lat), parseFloat(chords.lng)];
+    const chordsArray = [parseFloat(chords.lng), parseFloat(chords.lat)];
     console.log(chordsArray);
     datos.coordenadas = {
       type: "Point",
@@ -130,3 +130,4 @@ export const deleteMeeti = async (req, res) => {
     return res.status(400).json({ message: "Error del servidor" });
   }
 };
+

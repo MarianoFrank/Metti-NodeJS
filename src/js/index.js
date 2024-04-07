@@ -5,3 +5,7 @@ import "./alertas.js";
 import "./deleteMeeti.js";
 import "./avatar.js";
 import "./mapMeeti.js";
+import "./asistencia.js";
+import "./eliminarComentario.js";
+import "./busqueda.js";
+import "./mapaResultado.js";

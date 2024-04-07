@@ -1,0 +1,20 @@
+<main class="contenedor">
+  <% if(meetis.length > 0){ %>
+
+  <div class="mapa-resultado" id="mapaResultado"></div>
+
+  <h2><%= pageName %></h2>
+  <div class="grid columnas-md-3">
+    <% meetis.forEach(meeti => { %> <%-
+    include("./partials/card-meeti.ejs",{meeti}) %>
+    <input
+      type="hidden"
+      value="<%=  JSON.stringify(meeti.coordenadas.coordinates) %>"
+    />
+    <% }); %>
+  </div>
+
+  <% } else{%>
+  <p>No hay Meeti's para la busqueda</p>
+  <%}%>
+</main>

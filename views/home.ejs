@@ -6,18 +6,42 @@
 <div class="buscador-inicio">
   <div class="contenedor">
     <h2>Busca un grupo en tu ciudad</h2>
-    <form action="#">
-      <select name="categoria">
-        <option selected disabled value="">-- Elige una categoria --</option>
-        <% categorias.forEach(categoria => { %>
-        <option value="<%= categoria.id %>"><%= categoria.name %></option>
-        <% }); %>
-      </select>
-      <input type="text" name="nombre" placeholder="Nombre Meeti" />
-      <input type="text" name="ciudad" placeholder="Ciudad" />
-      <input type="text" name="pais" placeholder="País" />
+    <form action="/busqueda" method="GET" class="form-busqueda">
+      <div class="campo-busqueda">
+        <select name="categoria">
+          <option selected value="">-- Todas --</option>
+          <% categorias.forEach(categoria => { %>
+          <option value="<%= categoria.id %>"><%= categoria.name %></option>
+          <% }); %>
+        </select>
+        <input
+          type="text"
+          name="titulo"
+          placeholder="Nombre Meeti (Opcional)"
+        />
+      </div>
+
+      <div class="campo-busqueda">
+        <input
+          type="number"
+          min="1"
+          max="10"
+          name="radio"
+          placeholder="Radio en Km, ej: 20"
+          class="radio"
+        />
+        <div class="campo-direccion">
+          <input type="text" placeholder="Centro" id="direccionBusqueda" />
+          <span class="loader"></span>
+          <ul class="resultados-busqueda" style="display: none"></ul>
+          <button class="btn btn-azul" id="btnUbiActual" type="button">Ubicacion actual</button>
+          <input type="hidden" name="coordenadas" id="coordenadas" />
+        </div>
+      </div>
+
       <input type="submit" value="Buscar" class="btn btn-rosa" />
     </form>
+    <div id="mapaBusqueda"></div>
   </div>
 </div>
 
@@ -25,37 +49,20 @@
 <div class="contenedor">
   <h2>Próximos Meeti's</h2>
   <div class="grid columnas-md-3">
-    <% meetis.forEach(meeti => { %>
-    <div class="card">
-      <img src="<%= `uploads/${meeti.Grupo.imagen}` %>" />
-      <div class="card-texto">
-        <% const fecha = `${meeti.fecha} ${meeti.hora}` %>
-        <p class="fecha"><%= moment(fecha).format("LLLL"); %></p>
-        <a href="<%= `/meeti/${meeti.slug}` %>">
-          <h3><%= meeti.titulo %></h3>
-        </a>
-        <div class="info-autor">
-          <div class="imagen"><img src="<%= `uploads/${meeti.User.image}` %>" alt=""></div>
-          <div class="informacion">
-            <p>Organizado por:</p>
-            <p class="autor"><%= meeti.User.name %></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <% }); %>
+    <% meetis.forEach(meeti => { %> <%- include("./partials/card-meeti.ejs", {
+    meeti }) %> <% }); %>
   </div>
 </div>
 <% } %>
 
 <main class="bg-gris categorias">
-  <h2>Encuentra Grupos por Categoría</h2>
+  <h2>Encuentra Meeti's por Categoría</h2>
 
   <div class="contenedor">
     <ul class="listado-categorias grid columnas-2 columnas-md-3">
       <% categorias.forEach(categoria => { %>
       <li>
-        <a href="#">
+        <a href="/categoria/<%= categoria.name %>">
           <img src="<%- `/img/categoria_${categoria.id}.jpg` %>" />
           <p><%= categoria.name %></p>
         </a>

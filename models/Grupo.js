@@ -38,5 +38,5 @@ Grupo.init(
 
 Grupo.belongsTo(Categoria, { foreignKey: "CategoriaId", allowNull: true });
 Grupo.belongsTo(User);
-
+User.hasMany(Grupo);
 export default Grupo;

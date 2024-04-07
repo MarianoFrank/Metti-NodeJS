@@ -13,6 +13,7 @@ import db from "./config/db.js";
 import indexRoutes from "./routes/indexRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import mettiRoutes from "./routes/mettiRoutes.js";
+import comentariosRoutes from "./routes/comentariosRoutes.js";
 import passport from "./config/passport.js";
 
 try { 
@@ -72,7 +73,7 @@ app.use((req, res, next) => {
 app.use("/", indexRoutes);
 app.use("/", userRoutes);
 app.use("/", mettiRoutes);
-
+app.use("/", comentariosRoutes);
 app.listen(process.env.PORT, () => {
   console.log(`El seridor esta funcionando en el puerto ${process.env.PORT}`);
 });

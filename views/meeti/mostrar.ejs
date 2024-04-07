@@ -24,12 +24,25 @@
     </div>
     <!--Resumen evento-->
     <div class="pregunta-asistencia">
-      <% if(user.id ){ %>
-      <p>¿Asistirás?</p>
-      <a href="" class="btn btn-azul">Si</a>
+      <% if(user && user.id ){ %>
+
+      <div>
+        <p>¿Asistirás?</p>
+        <button
+          type="submit"
+          class="btn btn-azul"
+          data-meeti="<%= meeti.slug %>"
+          id="confirmarAsistencia"
+        >
+          Si
+        </button>
+      </div>
       <% } else {%>
-        <p><a href="/login">Inicia sesión</a>, para confirmar tu asistencia</p>
-        <%  }%>
+      <p>
+        <a href="/login"><strong>Inicia sesión</strong></a
+        >, para confirmar tu asistencia
+      </p>
+      <% }%>
     </div>
   </div>
 </div>
@@ -41,43 +54,55 @@
       <div class="descripcion"><%- meeti.descripcion %></div>
       <div class="asistentes">
         <div class="titulo">
-          <h3><%= meeti.Asistentes.length %> Asistentes</h3>
+          <h3><%= meeti.Asistencia.length %> Asistentes</h3>
           <a href="/asistentes/<%= meeti.slug %>">Ver Todos</a>
         </div>
       </div>
 
       <div class="comentarios">
         <h2>Comentarios</h2>
-        <div class="comentario">
-          <div class="imagen"></div>
-          <div class="texto">
-            <p>hola</p>
-            <p>Escrito por: <span>Mariano</span></p>
-            <input type="button" value="Eliminar" class="btn btn-azul" />
-          </div>
-        </div>
-        <!--Comentario-->
-        <div class="comentario">
-          <div class="imagen"></div>
-          <div class="texto">
-            <p>hola</p>
-            <p>Escrito por: <span>Mariano</span></p>
-            <input type="button" value="Eliminar" class="btn btn-azul" />
-          </div>
-        </div>
-        <!--Comentario-->
 
+        <% meeti.Comentarios.forEach(comentario => {%>
+        <div class="comentario">
+          <div class="imagen">
+            <% if(comentario.User.image) {%>
+            <img src="/uploads/<%= comentario.User.image %>" />
+            <% } %>
+          </div>
+          <div class="texto">
+            <p><%= comentario.texto %></p>
+            <p>Escrito por: <span><%= comentario.User.name %></span></p>
+
+            <% if(user && (user.id === comentario.User.id || meeti.User.id ===
+            user.id)) {%>
+
+            <button
+              class="btn btn-rosa"
+              data-comentario-id="<%= comentario.id%>"
+              id="eliminarComentario"
+            >
+              Eliminar
+            </button>
+            <% } %>
+          </div>
+        </div>
+        <% }); %> <% if(user && user.id){ %>
         <!-- Formulario Comentarios -->
-        <form action="" class="default-form">
+        <form action="/comentario/crear" class="default-form" method="POST">
           <legend>Agrega un comentario</legend>
           <div class="campo">
-            <label for="comentario">Comentario</label>
-            <textarea name="comentario"></textarea>
+            <label for="texto">Comentario</label>
+            <textarea name="texto"></textarea>
           </div>
+          <input type="hidden" value="<%= meeti.id %>" name="MeetiId" />
+          <input type="hidden" value="<%= meeti.slug %>" name="slug" />
           <div class="campo enviar">
             <input type="submit" value="Enviar" class="btn btn-rosa" />
           </div>
         </form>
+        <% } else{%>
+        <p>Inicia sesión para comentar</p>
+        <% } %>
       </div>
       <!-- Comentarios -->
     </div>
@@ -88,10 +113,33 @@
       </div>
       <div class="ubicacion">
         <p>Cargando...</p>
-        <input type="hidden" id="chords" value="<%= meeti.coordenadas.coordinates %>">
+        <input
+          type="hidden"
+          id="chords"
+          value="<%= meeti.coordenadas.coordinates %>"
+        />
         <div class="mapa"></div>
-        <a target="_blank" href="https://www.google.com/maps?q=<%= meeti.coordenadas.coordinates %>" class="btn btn-verde">Ver en GoogleMaps</a>
+        <a
+          target="_blank"
+          href="https://www.google.com/maps?q=<%= meeti.coordenadas.coordinates.reverse() %>"
+          class="btn btn-verde"
+          >Ver en GoogleMaps</a
+        >
       </div>
     </aside>
   </div>
 </main>
+
+<div class="contenedor">
+<% if(meetis.length > 0){ %>
+
+  <h2>Otros Meetis's Cercanos</h2>
+  <div class="grid columnas-md-3">
+    <% meetis.forEach(meeti => { %> <%- include("../partials/card-meeti.ejs",{meeti}) %> <%
+    }); %>
+  </div>
+
+<% } else{%>
+<p>No hay Meeti's cercanos</p>
+  <%}%>
+</div>

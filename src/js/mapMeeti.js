@@ -2,14 +2,17 @@ import L from "leaflet";
 
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 window.addEventListener("DOMContentLoaded", async () => {
-  //lat - long
-  let chords = document.getElementById("chords").value.split(","); //inicializa en Paraná
+  const mapa = document.querySelector(".mapa");
+  if (!mapa) {
+    return;
+  }
+
+  //lat-lng, tengo q darlo vuelta porque asi esta en la base de datos
+  let chords = document.getElementById("chords").value.split(",").reverse(); //inicializa en Paraná
 
   if (!chords) {
     return;
   }
-
-  const mapa = document.querySelector(".mapa");
 
   const map = L.map(mapa, {
     center: chords,
@@ -37,7 +40,6 @@ window.addEventListener("DOMContentLoaded", async () => {
           chords[1]
       );
       const result = await response.json();
-      console.log(result);
       return result;
     } catch (error) {
       return null;
@@ -47,7 +49,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   const ubicacionLabel = document.querySelector(".ubicacion p");
   const ubi = await getUbicacion();
   const ubicacionFormateada = `${ubi.name ? `${ubi.name}, ` : ""}
-  ${ubi.address.road}${ubi.address.house_number ? ` ${ubi.address.house_number}, ` : ", "}
+  ${ubi.address.road}${
+    ubi.address.house_number ? ` ${ubi.address.house_number}, ` : ", "
+  }
   ${ubi.address.city}, ${ubi.address.state}, ${ubi.address.country}
   `;
   ubicacionLabel.textContent = ubicacionFormateada;

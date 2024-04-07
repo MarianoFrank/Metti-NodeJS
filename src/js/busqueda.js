@@ -1,17 +1,16 @@
 import L from "leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
-
 window.addEventListener("DOMContentLoaded", () => {
-  const inputBusqueda = document.getElementById("busqueda");
-
+  const inputBusqueda = document.getElementById("direccionBusqueda");
   if (!inputBusqueda) {
     return;
   }
 
-  //lat - long
-  let chords = [-31.742231, -60.517831]; //inicializa en Paraná
+  const inputCoordenadas = document.getElementById("coordenadas");
 
-  const map = L.map("mapa", {
+  let chords = [-31.742231, -60.517831];
+
+  const map = L.map("mapaBusqueda", {
     center: chords,
     zoom: 13,
   });
@@ -23,28 +22,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const provider = new OpenStreetMapProvider();
 
-  function removeAllChilds(elementoPadre) {
-    while (elementoPadre.firstChild) {
-      elementoPadre.removeChild(elementoPadre.firstChild);
+  async function llenarCampo() {
+    const ubi = await getUbicacion();
+    if (!ubi) {
+      return;
     }
-  }
+    ubi.address.house_number = ubi.address.house_number
+      ? ubi.address.house_number + ", "
+      : "";
 
-  async function getUbicacion() {
-    //Api de openstreetmap para Reverse geocoding
-    //obtine toda la informacion de una direccion con solo saber sus coordenadas
-    try {
-      const response = await fetch(
-        "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" +
-          chords[0] +
-          "&lon=" +
-          chords[1]
-      );
-      const result = await response.json();
-      return result;
-    } catch (error) {
-      return null;
-    }
-  }
+    inputBusqueda.value = `${ubi.address.house_number}${ubi.address.road}`;
+}
 
   let marker;
   //mueve el mapa y coloca el marcador en la coordenada
@@ -57,40 +45,22 @@ window.addEventListener("DOMContentLoaded", () => {
       draggable: true,
       autoPan: true,
     }).addTo(map);
-
+    marcarRadio();
     marker.on("moveend", async function (e) {
       const chordsObj = e.target.getLatLng();
       chords = [chordsObj.lat, chordsObj.lng];
-      llenarCampos();
+      moverMapa();
     });
+    //cada vez que el mapa se mueve significa que se setearon las coordenadas
+    //entonces las guardamos en el input
+    inputCoordenadas.value = JSON.stringify(chords);
+    llenarCampo();
   }
 
-  async function llenarCampos() {
-    const ubi = await getUbicacion();
-    if (!ubi) {
-      return;
+  function removeAllChilds(elementoPadre) {
+    while (elementoPadre.firstChild) {
+      elementoPadre.removeChild(elementoPadre.firstChild);
     }
-
-    ubi.address.house_number = ubi.address.house_number
-      ? ubi.address.house_number + ", "
-      : "";
-
-    inputBusqueda.value = `${ubi.address.house_number}${ubi.address.road}`;
-
-    const direccion = document.getElementById("direccion");
-    const ciudad = document.getElementById("ciudad");
-    const estado = document.getElementById("estado");
-    const pais = document.getElementById("pais");
-    const coordenadas = document.getElementById("coordenadas");
-
-    direccion.value = `${ubi.address.house_number}${ubi.address.road}`;
-
-    ciudad.value = ubi.address.city;
-    estado.value = ubi.address.state;
-    pais.value = ubi.address.country;
-
-    const { lat, lon } = ubi;
-    coordenadas.value = JSON.stringify({ lng: lon, lat });
   }
 
   function mostrarResultador(results) {
@@ -113,7 +83,6 @@ window.addEventListener("DOMContentLoaded", () => {
           resultsContainer.style.display = "none";
 
           moverMapa();
-          llenarCampos();
         });
       });
     } else {
@@ -139,6 +108,7 @@ window.addEventListener("DOMContentLoaded", () => {
       // Realizamos la búsqueda después de que haya pasado un tiempo sin que el usuario escriba
       try {
         const results = await provider.search({ query });
+        console.log(results);
         mostrarResultador(results);
       } catch (error) {
         console.error("Error al buscar:", error);
@@ -150,16 +120,59 @@ window.addEventListener("DOMContentLoaded", () => {
 
   inputBusqueda.addEventListener("input", buscarDireccion);
 
-  //Verifica si hay coordenadas al momento de cargar la pagina
-  function coordenadasPrevias() {
-    const inputCoordenadas = document.getElementById("coordenadas");
+  //radio
 
-    if (inputCoordenadas.value) {
-      chords = JSON.parse(inputCoordenadas.value).reverse();
-      moverMapa();
-      llenarCampos();
+  const inputRadio = document.querySelector(".radio");
+
+  let circunferencia;
+  function marcarRadio() {
+    if (circunferencia) {
+      circunferencia.remove();
+    }
+
+    if (!inputRadio.value) {
+      inputRadio.value = 3;
+    }
+
+    const radio = inputRadio.value * 1000;
+
+    circunferencia = L.circle(chords, radio, {
+      color: "#99CFFF",
+      fillColor: "#47a2f3",
+      opacity: 0.5,
+      fillOpacity: 0.5,
+    }).addTo(map);
+  }
+
+  inputRadio.addEventListener("input", marcarRadio);
+
+  //ubicacion actual
+
+  async function getUbicacion() {
+    //Api de openstreetmap para Reverse geocoding
+    //obtine toda la informacion de una direccion con solo saber sus coordenadas
+    try {
+      const response = await fetch(
+        "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" +
+          chords[0] +
+          "&lon=" +
+          chords[1]
+      );
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      return null;
     }
   }
 
-  coordenadasPrevias();
+  function getUbicacionActual() {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      chords = [position.coords.latitude, position.coords.longitude];
+      moverMapa();
+    });
+  }
+
+  const btnUbiActual = document.getElementById("btnUbiActual");
+
+  btnUbiActual.onclick = getUbicacionActual;
 });

@@ -52,7 +52,7 @@ Meeti.init(
     coordenadas: {
       //esto determina puntos en un espacio, en este caso sera bidimensional debido a las coordenadas
       //gracias a esto podemos realizar operaciones especiales
-      type: DataTypes.GEOGRAPHY("point", 4326), //4326 es el código EPSG para coordenadas latitud/longitud
+      type: DataTypes.GEOMETRY("point"),
       allowNull: false,
       validate: {
         notEmpty: { msg: "Agregue una direccion" },
@@ -75,14 +75,24 @@ Meeti.init(
   }
 );
 
+export default Meeti;
+
 //relaciones
 
 Meeti.belongsTo(User, { foreignKey: "UserId", allowNull: false });
 
+//Defino la relacion en ambos sentidos
 Meeti.belongsToMany(User, {
   through: "asistentes_meetis",
   tableName: "asistentes_meetis",
-  as: "Asistentes",
+  as: "Asistencia",
+  timestamps: false,
+});
+
+User.belongsToMany(Meeti, {
+  through: "asistentes_meetis",
+  tableName: "asistentes_meetis",
+  as: "Asistencia",
   timestamps: false,
 });
 
@@ -92,4 +102,4 @@ Meeti.belongsTo(Grupo, {
   validate: { notEmpty: { msg: "Seleccione un grupo" } },
 });
 
-export default Meeti;
+Grupo.hasMany(Meeti);

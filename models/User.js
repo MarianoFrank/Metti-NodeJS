@@ -1,7 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import db from "../config/db.js";
 import bcrypt from "bcrypt";
-import Meeti from "./Meeti.js";
 
 class User extends Model {
   validatePassword(password) {
@@ -66,3 +65,5 @@ User.init(
 
 
 export default User;
+
+

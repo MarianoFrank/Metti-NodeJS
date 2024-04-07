@@ -1,6 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 import * as userController from "../controllers/userController.js";
+import * as userControllerFE from "../controllers/frontend/userControllerFE.js";
 import * as adminController from "../controllers/adminController.js";
 import * as groupController from "../controllers/groupController.js";
 import * as imageController from "../controllers/imageController.js";
@@ -83,4 +84,6 @@ router.post(
   groupController.deleteGroup
 ); //Api para eliminar
 
+//muestra perfil del usuario
+router.get("/user/:id", userControllerFE.mostrarUser);
 export default router;

@@ -15,8 +15,10 @@
           <p class="fecha">
             <%- moment(meeti.fecha + " "+ meeti.hora).format('LLLL') %>
           </p>
-          <a href="<%= `/meeti/${meeti.slug}` %>"><h3><%- meeti.titulo %></h3></a>
-          
+          <a href="<%= `/meeti/${meeti.slug}` %>"
+            ><h3><%- meeti.titulo %></h3></a
+          >
+
           <small><%- meeti.interesados %></small>
         </div>
         <div class="acciones contenedor-botones">
@@ -79,7 +81,7 @@
       <% grupos.forEach(grupo =>{ %>
       <li>
         <div class="informacion-admin">
-          <h3><%= grupo.name %></h3>
+          <a href="<%= `/grupo/${grupo.id}` %>"><h3><%- grupo.name %></h3></a>
         </div>
         <div class="acciones contenedor-botones">
           <a href="/edit-group/<%= grupo.id %>" class="btn btn-verde">Editar</a>
