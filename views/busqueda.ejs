@@ -7,10 +7,7 @@
   <div class="grid columnas-md-3">
     <% meetis.forEach(meeti => { %> <%-
     include("./partials/card-meeti.ejs",{meeti}) %>
-    <input
-      type="hidden"
-      value="<%=  JSON.stringify(meeti.coordenadas.coordinates) %>"
-    />
+    
     <% }); %>
   </div>
 

@@ -20,4 +20,12 @@
       </div>
     </div>
   </div>
+
+  <% if(meeti.coordenadas) {%>
+  <input
+    type="hidden"
+    id="coordenadas-meeti"
+    value="<%=  JSON.stringify(meeti.coordenadas.coordinates) %>"
+  />
+  <% } %>
 </div>

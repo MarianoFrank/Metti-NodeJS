@@ -342,9 +342,18 @@ form textarea {
   margin-top: 1rem;
   height: 20rem;
   width: 100%;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+.enlace-mapa h3{
+  font-size: 1rem;
+
 }
 
 .mapa-resultado{
+  border-radius: .5rem;
+  overflow: hidden;
   margin-top: 1rem;
   height: 30rem;
   width: 100%;
